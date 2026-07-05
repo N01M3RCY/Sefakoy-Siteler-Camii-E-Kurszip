@@ -1,0 +1,1 @@
+- [Render.com deployment](render-deployment.md) — app needs Docker (not nix-shell) for Render; PHP+MariaDB single-container pattern, verified working locally.

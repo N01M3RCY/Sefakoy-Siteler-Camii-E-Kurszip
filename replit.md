@@ -79,6 +79,23 @@ Port: **5000**
 - DB bağlantısı: Unix socket (`~/mysql.sock`), `cami_user` / `cami_pass_2025`
 - Eğer DB sıfırlanması gerekirse: `rm -rf ~/mysql_data ~/mysql.sock ~/mysql.pid` sonra workflow'u yeniden başlatın
 
+## Render.com Deployment
+
+Uygulama Replit dışında **Render.com**'da Docker ile de çalıştırılabilir (Render, nix-shell'i desteklemediği için Docker gerekiyor).
+
+Dosyalar:
+- `Dockerfile` — PHP 8.3 + MariaDB'yi tek container'da kurar (pdo_mysql/mysqli eklentileriyle)
+- `start-render.sh` — Container içinde MariaDB'yi başlatır, DB/kullanıcıyı oluşturur, şemayı kurar, PHP sunucuyu `$PORT` üzerinde başlatır
+- `render.yaml` — Render blueprint tanımı (`env: docker`, `PORT=724`, kalıcı disk `/var/lib/mysql` için)
+
+Kurulum adımları (Render Dashboard):
+1. Repo'yu Render'a bağlayın → "New Web Service" → "Docker" ortamı seçilecek (render.yaml otomatik algılanır)
+2. Environment Variable: `PORT` = `724` (render.yaml'da zaten tanımlı)
+3. Kalıcı disk (`cami-db-data`, `/var/lib/mysql`) ücretsiz planda desteklenmez — ücretsiz planda **her deploy/restart'ta veritabanı sıfırlanır**. Kalıcı veri için ücretli plan + disk gerekir.
+4. Deploy sonrası uygulama `https://<servis-adi>.onrender.com` üzerinden port 724'e yönlendirilerek erişilebilir olur (Render dışarıya her zaman 443/80 sunar, iç port olarak 724 kullanılır).
+
+Yerel olarak Docker build + çalıştırma testi yapılıp doğrulandı (port 724'te HTTP 200 yanıt, tablo kurulumu, admin/demo giriş çalışıyor).
+
 ## User Preferences
 
 - Sistem Türkçe arayüzle çalışmalı

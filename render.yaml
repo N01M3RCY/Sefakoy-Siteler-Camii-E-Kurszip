@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: cami-yonetim-sistemi
+    env: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: PORT
+        value: "724"
+    healthCheckPath: /
+    disk:
+      name: cami-db-data
+      mountPath: /var/lib/mysql
+      sizeGB: 1

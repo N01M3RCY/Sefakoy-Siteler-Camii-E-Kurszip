@@ -1,0 +1,8 @@
+.git
+.local
+.agents
+.cache
+attached_assets
+zipFile.zip
+config/db.local.php
+*.log

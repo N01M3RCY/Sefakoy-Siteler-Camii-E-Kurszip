@@ -36,6 +36,10 @@ include 'layout/header.php';
 <div class="card">
   <div class="card-header">
     <span class="card-title">👨‍👩‍👧 Veliler (<?= count($parents) ?>)</span>
+    <div style="display:flex;gap:8px">
+      <a href="export.php?type=parents&format=xls" class="btn btn-sm btn-secondary">📥 Excel</a>
+      <a href="export.php?type=parents&format=csv" class="btn btn-sm btn-secondary">📄 CSV</a>
+    </div>
   </div>
   <div class="table-wrap">
     <table class="table">

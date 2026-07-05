@@ -49,7 +49,12 @@ if (isset($_SESSION['mosque_id'])) redirect('mosque/index.php');
     </a>
   </div>
 
-  <div class="register-link-bar">
+  <div class="register-link-bar" style="margin-top:16px">
+    <a href="parent/login.php" style="display:inline-flex;align-items:center;gap:8px;background:rgba(201,162,39,.15);border:1px solid rgba(201,162,39,.4);padding:10px 22px;border-radius:999px;color:#f0d060;font-weight:700;transition:.2s">
+      👨‍👩‍👧 Veli Paneli Girişi
+    </a>
+  </div>
+  <div class="register-link-bar" style="margin-top:12px">
     📋 Çocuğunuzu kaydetmek ister misiniz? &nbsp;
     <a href="register.php">Veli Kayıt Formu →</a>
   </div>

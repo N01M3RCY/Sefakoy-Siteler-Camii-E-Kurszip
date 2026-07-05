@@ -53,6 +53,8 @@ include 'layout/header.php';
     </form>
     <button onclick="window.print()" class="btn btn-secondary no-print">🖨️ Yazdır</button>
     <a href="../register.php" target="_blank" class="btn btn-gold no-print">📋 Kayıt Formu</a>
+    <a href="export.php?type=students&format=xls" class="btn btn-secondary no-print">📥 Excel</a>
+    <a href="export.php?type=students&format=csv" class="btn btn-secondary no-print">📄 CSV</a>
   </div>
 </div>
 

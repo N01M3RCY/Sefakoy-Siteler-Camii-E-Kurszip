@@ -35,6 +35,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!$s_surname) $errors[] = 'Öğrenci soyadı zorunludur.';
     if (!in_array($s_gender, ['male','female'])) $errors[] = 'Öğrenci cinsiyeti seçilmelidir.';
     if (!$mosque_id) $errors[] = 'Cami seçimi zorunludur.';
+    $p_password = $_POST['parent_password'] ?? '';
+    $p_password_confirm = $_POST['parent_password_confirm'] ?? '';
+    if ($p_password && strlen($p_password) < 6) $errors[] = 'Şifre en az 6 karakter olmalıdır.';
+    if ($p_password && $p_password !== $p_password_confirm) $errors[] = 'Şifreler eşleşmiyor.';
 
     // Cami var mı?
     if ($mosque_id) {
@@ -53,11 +57,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $chk = $db->prepare("SELECT id FROM parents WHERE tc_no=?");
                 $chk->execute([$p_tc]);
                 $existing = $chk->fetchColumn();
-                if ($existing) $parent_id = $existing;
+                if ($existing) {
+                    $parent_id = $existing;
+                    // Şifre verilmişse mevcut veliye de uygula
+                    if ($p_password) {
+                        $db->prepare("UPDATE parents SET password=? WHERE id=?")->execute([hashPassword($p_password), $parent_id]);
+                    }
+                }
             }
             if (!$parent_id) {
-                $stmt = $db->prepare("INSERT INTO parents (name,surname,tc_no,phone,email,address) VALUES (?,?,?,?,?,?)");
-                $stmt->execute([$p_name, $p_surname, $p_tc ?: null, $p_phone, $p_email ?: null, $p_address ?: null]);
+                $hashedPass = $p_password ? hashPassword($p_password) : null;
+                $stmt = $db->prepare("INSERT INTO parents (name,surname,tc_no,phone,email,address,password) VALUES (?,?,?,?,?,?,?)");
+                $stmt->execute([$p_name, $p_surname, $p_tc ?: null, $p_phone, $p_email ?: null, $p_address ?: null, $hashedPass]);
                 $parent_id = $db->lastInsertId();
             }
 
@@ -240,6 +251,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </option>
             <?php endforeach; ?>
           </select>
+        </div>
+
+        <!-- VELİ PANELİ ŞİFRESİ -->
+        <div class="section-title" style="margin-top:28px">🔐 Veli Paneli Şifresi</div>
+        <div class="alert alert-info">ℹ️ Şifre belirlerseniz <strong>Veli Paneli</strong>'ne giriş yaparak çocuğunuzun devam durumunu ve QR kodunu görüntüleyebilirsiniz.</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Şifre <span style="color:#94a3b8;font-weight:400">(opsiyonel, min. 6 karakter)</span></label>
+            <input type="password" name="parent_password" class="form-control" placeholder="••••••••" minlength="6">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Şifre Tekrar</label>
+            <input type="password" name="parent_password_confirm" class="form-control" placeholder="••••••••">
+          </div>
         </div>
 
         <!-- ONAY -->

@@ -49,6 +49,8 @@ include 'layout/header.php';
   <div class="card-header">
     <span class="card-title">📚 Öğrenciler (<?= count($students) ?>)</span>
     <button onclick="window.print()" class="btn btn-sm btn-secondary no-print">🖨️ Yazdır</button>
+    <a href="export.php?type=students&format=xls<?= $mosque_f?"&mosque=$mosque_f":'' ?>" class="btn btn-sm btn-secondary no-print">📥 Excel</a>
+    <a href="export.php?type=students&format=csv<?= $mosque_f?"&mosque=$mosque_f":'' ?>" class="btn btn-sm btn-secondary no-print">📄 CSV</a>
   </div>
   <div class="table-wrap">
     <table class="table">

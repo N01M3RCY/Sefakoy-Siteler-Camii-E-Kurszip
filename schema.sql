@@ -57,6 +57,47 @@ CREATE TABLE IF NOT EXISTS students (
   FOREIGN KEY (parent_id) REFERENCES parents(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
+CREATE TABLE IF NOT EXISTS teachers (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  mosque_id INT NOT NULL,
+  name VARCHAR(100) NOT NULL,
+  username VARCHAR(50) UNIQUE NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  status ENUM('active','inactive') DEFAULT 'active',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (mosque_id) REFERENCES mosques(id) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS courses (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  mosque_id INT NOT NULL,
+  teacher_id INT NULL,
+  name VARCHAR(100) NOT NULL,
+  description TEXT,
+  status ENUM('active','inactive') DEFAULT 'active',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (mosque_id) REFERENCES mosques(id) ON DELETE CASCADE,
+  FOREIGN KEY (teacher_id) REFERENCES teachers(id) ON DELETE SET NULL
+) ENGINE=InnoDB;
+
+ALTER TABLE students ADD COLUMN IF NOT EXISTS course_id INT NULL;
+
+CREATE TABLE IF NOT EXISTS memorizations (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  mosque_id INT NOT NULL,
+  teacher_id INT NULL,
+  course_id INT NULL,
+  title VARCHAR(200) NOT NULL,
+  type ENUM('sure','dua','ayet','diger') DEFAULT 'sure',
+  content TEXT,
+  due_date DATE NULL,
+  status ENUM('active','done') DEFAULT 'active',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (mosque_id) REFERENCES mosques(id) ON DELETE CASCADE,
+  FOREIGN KEY (teacher_id) REFERENCES teachers(id) ON DELETE SET NULL,
+  FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE SET NULL
+) ENGINE=InnoDB;
+
 CREATE TABLE IF NOT EXISTS duas (
   id INT AUTO_INCREMENT PRIMARY KEY,
   mosque_id INT NOT NULL,

@@ -6,12 +6,17 @@ $mid = $_SESSION['mosque_id'];
 
 $success = $error = '';
 
+// Kursları getir
+$coursesList = $db->prepare("SELECT * FROM courses WHERE mosque_id=? AND status='active' ORDER BY name");
+$coursesList->execute([$mid]); $coursesList = $coursesList->fetchAll();
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name    = trim($_POST['name'] ?? '');
-    $surname = trim($_POST['surname'] ?? '');
-    $age     = (int)($_POST['age'] ?? 0);
-    $gender  = $_POST['gender'] ?? '';
-    $notes   = trim($_POST['notes'] ?? '');
+    $name      = trim($_POST['name'] ?? '');
+    $surname   = trim($_POST['surname'] ?? '');
+    $age       = (int)($_POST['age'] ?? 0);
+    $gender    = $_POST['gender'] ?? '';
+    $notes     = trim($_POST['notes'] ?? '');
+    $course_id = (int)($_POST['course_id'] ?? 0) ?: null;
 
     if (!$name || !$surname || !$age || !$gender) {
         $error = 'Ad, soyad, yaş ve cinsiyet zorunludur.';
@@ -25,8 +30,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $birth_date = $birth_year . '-01-01';
 
         try {
-            $stmt = $db->prepare("INSERT INTO students (mosque_id, parent_id, name, surname, age, birth_date, gender, qr_code, notes, status) VALUES (?, NULL, ?, ?, ?, ?, ?, ?, ?, 'active')");
-            $stmt->execute([$mid, $name, $surname, $age, $birth_date, $gender, $qr, $notes]);
+            $stmt = $db->prepare("INSERT INTO students (mosque_id, parent_id, name, surname, age, birth_date, gender, qr_code, notes, course_id, status) VALUES (?, NULL, ?, ?, ?, ?, ?, ?, ?, ?, 'active')");
+            $stmt->execute([$mid, $name, $surname, $age, $birth_date, $gender, $qr, $notes, $course_id]);
             $sid = $db->lastInsertId();
             $success = "✅ <strong>" . sanitize($name . ' ' . $surname) . "</strong> başarıyla eklendi! QR Kod: <code>$qr</code>";
         } catch (PDOException $e) {
@@ -100,6 +105,18 @@ include 'layout/header.php';
           <label class="form-label">Not <small style="color:#64748b">(opsiyonel)</small></label>
           <input type="text" name="notes" class="form-control" placeholder="Özel not..." value="<?= sanitize($_POST['notes'] ?? '') ?>">
         </div>
+
+        <?php if (!empty($coursesList)): ?>
+        <div class="form-group">
+          <label class="form-label">Kurs / Grup <small style="color:#64748b">(opsiyonel)</small></label>
+          <select name="course_id" class="form-control">
+            <option value="">— Kursa atama —</option>
+            <?php foreach ($coursesList as $c): ?>
+            <option value="<?= $c['id'] ?>"><?= sanitize($c['name']) ?></option>
+            <?php endforeach; ?>
+          </select>
+        </div>
+        <?php endif; ?>
 
         <div class="alert alert-info" style="margin-bottom:16px">
           ℹ️ Öğrenci otomatik QR kod alır. Veli bilgisi sonradan eklenebilir.

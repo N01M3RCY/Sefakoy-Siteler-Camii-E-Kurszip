@@ -2,9 +2,10 @@
 require_once 'config/db.php';
 session_start_safe();
 
-if (isset($_SESSION['admin_id'])) redirect('admin/index.php');
-if (isset($_SESSION['mosque_id'])) redirect('mosque/index.php');
-if (isset($_SESSION['parent_id'])) redirect('parent/index.php');
+if (isset($_SESSION['admin_id']))   redirect('admin/index.php');
+if (isset($_SESSION['mosque_id']))  redirect('mosque/index.php');
+if (isset($_SESSION['parent_id']))  redirect('parent/index.php');
+if (isset($_SESSION['teacher_id'])) redirect('teacher/index.php');
 
 $ayetler = [
   ["metin" => "Şüphesiz Allah adaleti, iyilik yapmayı ve akrabaya yardım etmeyi emreder.", "kaynak" => "Nahl, 90"],
@@ -338,7 +339,7 @@ body{
   <div class="hero-bismillah">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</div>
   <div class="hero-logo">🕌</div>
   <h1 class="hero-title">Cami Öğrenci Yönetim Sistemi</h1>
-  <p class="hero-sub">Diyanet İşleri Başkanlığı · Müftülük Hizmetleri</p>
+  <p class="hero-sub">Eğitim · Takip · Yönetim</p>
   <div class="hero-line"></div>
 </div>
 
@@ -406,6 +407,8 @@ body{
       <a href="admin/login.php">⚙️ Yönetici Girişi</a>
       <span class="footer-sep">|</span>
       <a href="mosque/login.php">🕌 Cami Personeli</a>
+      <span class="footer-sep">|</span>
+      <a href="teacher/login.php">👨‍🏫 Hoca Girişi</a>
       <span class="footer-sep">|</span>
       <a href="mosque/register.php">+ Cami Kaydı</a>
     </div>

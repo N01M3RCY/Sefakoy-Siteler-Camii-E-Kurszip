@@ -1,19 +1,26 @@
 <?php
-// Veritabanı Ayarları - InfinityFree için düzenleyin
-define('DB_HOST', 'localhost');
-define('DB_USER', 'root');        // InfinityFree'de kendi kullanıcı adınız
-define('DB_PASS', '');            // InfinityFree'de kendi şifreniz
-define('DB_NAME', 'cami_sistemi'); // InfinityFree'de kendi DB adınız
+// Replit ortamında local config varsa onu kullan, yoksa InfinityFree ayarları
+if (file_exists(__DIR__ . '/db.local.php')) {
+    require_once __DIR__ . '/db.local.php';
+} else {
+    // ── InfinityFree Ayarları ─────────────────────────────
+    define('DB_HOST', 'localhost');
+    define('DB_USER', 'root');        // InfinityFree veritabanı kullanıcı adı
+    define('DB_PASS', '');            // InfinityFree veritabanı şifresi
+    define('DB_NAME', 'cami_sistemi'); // InfinityFree veritabanı adı
+    define('DB_SOCKET', '');
+}
 
 define('SITE_NAME', 'Cami Öğrenci Yönetim Sistemi');
-define('SITE_URL', '');  // Örn: https://siteniz.infinityfreeapp.com
+define('SITE_URL', '');
 
 function getDB() {
     static $pdo = null;
     if ($pdo === null) {
         try {
+            $socket = defined('DB_SOCKET') && DB_SOCKET ? ';unix_socket=' . DB_SOCKET : '';
             $pdo = new PDO(
-                "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4",
+                "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4" . $socket,
                 DB_USER,
                 DB_PASS,
                 [

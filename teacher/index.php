@@ -16,8 +16,9 @@ $totalStudents = $cid ? $db->query("SELECT COUNT(*) FROM students WHERE course_i
 $todayAtt = $db->prepare("SELECT COUNT(*) FROM attendance a JOIN students s ON a.student_id=s.id WHERE s.mosque_id=? AND a.scan_date=CURDATE()" . ($cid ? " AND s.course_id=$cid" : " AND 1=0"));
 $todayAtt->execute([$mid]); $todayAtt = $todayAtt->fetchColumn();
 $activeMems = $cid ? $db->query("SELECT COUNT(*) FROM memorizations WHERE course_id=$cid AND status='active'")->fetchColumn() : 0;
-$activeHws  = $db->prepare("SELECT COUNT(*) FROM homeworks WHERE mosque_id=? AND status='active'");
-$activeHws->execute([$mid]); $activeHws = $activeHws->fetchColumn();
+$activeHws  = $db->prepare("SELECT COUNT(*) FROM homeworks WHERE mosque_id=? AND course_id=? AND status='active'");
+$activeHws->execute([$mid, $cid]); $activeHws = $activeHws->fetchColumn();
+$repeatCount = $cid ? (int)$db->query("SELECT COUNT(*) FROM student_progress sp JOIN students s ON sp.student_id=s.id WHERE s.course_id=$cid AND s.status='active' AND sp.status='tekrar'")->fetchColumn() : 0;
 
 // Son öğrenciler
 $students = [];
@@ -66,6 +67,10 @@ include 'layout/header.php';
     <div class="stat-icon">📝</div>
     <div><div class="stat-value"><?= $activeHws ?></div><div class="stat-label">Aktif Ödev</div></div>
   </div>
+  <div class="stat-card" style="border-left:4px solid #f97316">
+    <div class="stat-icon">🔁</div>
+    <div><div class="stat-value"><?= $repeatCount ?></div><div class="stat-label">Tekrar Gereken</div></div>
+  </div>
 </div>
 
 <div style="display:grid;grid-template-columns:2fr 1fr;gap:20px;margin-top:20px">
@@ -103,7 +108,9 @@ include 'layout/header.php';
     <div class="card">
       <div class="card-header"><span class="card-title">⚡ Hızlı Erişim</span></div>
       <div class="card-body" style="display:flex;flex-direction:column;gap:8px">
-        <a href="memorizations.php" class="btn btn-primary btn-block">📖 Sure / Dua Ezberi</a>
+        <a href="memorizations.php" class="btn btn-primary btn-block">📖 Sure / Dua Sırası</a>
+        <a href="progress.php" class="btn btn-secondary btn-block">🧭 Ezber Takibi</a>
+        <a href="add_student.php" class="btn btn-secondary btn-block">➕ Öğrenci Ekle</a>
         <a href="attendance.php" class="btn btn-secondary btn-block">✅ Yoklama Al</a>
         <a href="homeworks.php" class="btn btn-secondary btn-block">📝 Ödevler</a>
         <a href="duas.php" class="btn btn-secondary btn-block">🤲 Dua Sistemi</a>

@@ -91,11 +91,24 @@ CREATE TABLE IF NOT EXISTS memorizations (
   type ENUM('sure','dua','ayet','diger') DEFAULT 'sure',
   content TEXT,
   due_date DATE NULL,
+  sort_order INT NOT NULL DEFAULT 0,
   status ENUM('active','done') DEFAULT 'active',
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (mosque_id) REFERENCES mosques(id) ON DELETE CASCADE,
   FOREIGN KEY (teacher_id) REFERENCES teachers(id) ON DELETE SET NULL,
   FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE SET NULL
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS student_progress (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  student_id INT NOT NULL,
+  memorization_id INT NOT NULL,
+  status ENUM('tamamlandi','tekrar') NOT NULL DEFAULT 'tekrar',
+  attempt_count INT NOT NULL DEFAULT 1,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  UNIQUE KEY uniq_student_mem (student_id, memorization_id),
+  FOREIGN KEY (student_id) REFERENCES students(id) ON DELETE CASCADE,
+  FOREIGN KEY (memorization_id) REFERENCES memorizations(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS duas (
@@ -112,12 +125,25 @@ CREATE TABLE IF NOT EXISTS duas (
 CREATE TABLE IF NOT EXISTS homeworks (
   id INT AUTO_INCREMENT PRIMARY KEY,
   mosque_id INT NOT NULL,
+  course_id INT NULL,
   title VARCHAR(200) NOT NULL,
   description TEXT,
   due_date DATE NULL,
   status ENUM('active','done') DEFAULT 'active',
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (mosque_id) REFERENCES mosques(id) ON DELETE CASCADE
+  FOREIGN KEY (mosque_id) REFERENCES mosques(id) ON DELETE CASCADE,
+  FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE SET NULL
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS homework_students (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  homework_id INT NOT NULL,
+  student_id INT NOT NULL,
+  status ENUM('active','done') NOT NULL DEFAULT 'active',
+  completed_at TIMESTAMP NULL,
+  UNIQUE KEY uniq_hw_student (homework_id, student_id),
+  FOREIGN KEY (homework_id) REFERENCES homeworks(id) ON DELETE CASCADE,
+  FOREIGN KEY (student_id) REFERENCES students(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS attendance (

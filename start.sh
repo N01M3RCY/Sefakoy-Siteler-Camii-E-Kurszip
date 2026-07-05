@@ -143,6 +143,29 @@ if (!in_array('admins', \$tables)) {
         FOREIGN KEY (teacher_id) REFERENCES teachers(id) ON DELETE SET NULL,
         FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE SET NULL
     ) ENGINE=InnoDB\"); } catch(Exception \$e) {}
+    try { \$db->exec('ALTER TABLE memorizations ADD COLUMN sort_order INT NOT NULL DEFAULT 0 AFTER due_date'); } catch(Exception \$e) {}
+    try { \$db->exec(\"CREATE TABLE IF NOT EXISTS student_progress (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        student_id INT NOT NULL,
+        memorization_id INT NOT NULL,
+        status ENUM('tamamlandi','tekrar') NOT NULL DEFAULT 'tekrar',
+        attempt_count INT NOT NULL DEFAULT 1,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        UNIQUE KEY uniq_student_mem (student_id, memorization_id),
+        FOREIGN KEY (student_id) REFERENCES students(id) ON DELETE CASCADE,
+        FOREIGN KEY (memorization_id) REFERENCES memorizations(id) ON DELETE CASCADE
+    ) ENGINE=InnoDB\"); } catch(Exception \$e) {}
+    try { \$db->exec('ALTER TABLE homeworks ADD COLUMN course_id INT NULL AFTER mosque_id'); } catch(Exception \$e) {}
+    try { \$db->exec(\"CREATE TABLE IF NOT EXISTS homework_students (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        homework_id INT NOT NULL,
+        student_id INT NOT NULL,
+        status ENUM('active','done') NOT NULL DEFAULT 'active',
+        completed_at TIMESTAMP NULL,
+        UNIQUE KEY uniq_hw_student (homework_id, student_id),
+        FOREIGN KEY (homework_id) REFERENCES homeworks(id) ON DELETE CASCADE,
+        FOREIGN KEY (student_id) REFERENCES students(id) ON DELETE CASCADE
+    ) ENGINE=InnoDB\"); } catch(Exception \$e) {}
     echo '✅ Tablolar güncellendi.' . PHP_EOL;
 }
 // Her başlatmada admin ve cami şifresini doğru hash ile güncelle

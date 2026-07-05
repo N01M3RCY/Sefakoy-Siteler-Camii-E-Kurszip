@@ -24,12 +24,18 @@
       <a href="students.php" class="sidebar-link <?= basename($_SERVER['PHP_SELF'])==='students.php'?'active':'' ?>">
         <span class="sidebar-link-icon">📚</span> Öğrenciler
       </a>
+      <a href="add_student.php" class="sidebar-link <?= basename($_SERVER['PHP_SELF'])==='add_student.php'?'active':'' ?>">
+        <span class="sidebar-link-icon">➕</span> Öğrenci Ekle
+      </a>
       <a href="attendance.php" class="sidebar-link <?= basename($_SERVER['PHP_SELF'])==='attendance.php'?'active':'' ?>">
         <span class="sidebar-link-icon">✅</span> Yoklama Al
       </a>
       <div class="sidebar-section">Eğitim İçeriği</div>
       <a href="memorizations.php" class="sidebar-link <?= basename($_SERVER['PHP_SELF'])==='memorizations.php'?'active':'' ?>">
-        <span class="sidebar-link-icon">📖</span> Sure / Dua Ezberi
+        <span class="sidebar-link-icon">📖</span> Sure / Dua Sırası
+      </a>
+      <a href="progress.php" class="sidebar-link <?= basename($_SERVER['PHP_SELF'])==='progress.php'?'active':'' ?>">
+        <span class="sidebar-link-icon">🧭</span> Ezber Takibi
       </a>
       <a href="homeworks.php" class="sidebar-link <?= basename($_SERVER['PHP_SELF'])==='homeworks.php'?'active':'' ?>">
         <span class="sidebar-link-icon">📝</span> Ödevler

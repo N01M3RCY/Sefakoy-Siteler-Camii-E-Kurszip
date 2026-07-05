@@ -40,7 +40,10 @@ include 'layout/header.php';
       <div style="font-weight:800;font-size:18px"><?= sanitize($course['name']) ?></div>
       <?php if ($course['description']): ?><div style="opacity:.8;font-size:13px"><?= sanitize($course['description']) ?></div><?php endif; ?>
     </div>
-    <div style="margin-left:auto;font-size:24px;font-weight:800"><?= count($students) ?> öğrenci</div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:16px">
+      <div style="font-size:24px;font-weight:800"><?= count($students) ?> öğrenci</div>
+      <a href="add_student.php" class="btn btn-sm" style="background:#fff;color:#4c1d95">➕ Öğrenci Ekle</a>
+    </div>
   </div>
 </div>
 

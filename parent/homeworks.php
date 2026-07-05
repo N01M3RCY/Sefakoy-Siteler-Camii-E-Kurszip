@@ -4,28 +4,32 @@ requireLogin('parent', 'login.php');
 $db = getDB();
 $pid = $_SESSION['parent_id'];
 
-// Bu velinin çocuklarının kayıtlı olduğu camileri bul
-$mosques_stmt = $db->prepare("
-    SELECT DISTINCT m.id, m.name FROM mosques m
-    JOIN students s ON s.mosque_id = m.id
-    WHERE s.parent_id = ?
-");
-$mosques_stmt->execute([$pid]);
-$parent_mosques = $mosques_stmt->fetchAll();
-$mosque_ids = array_column($parent_mosques, 'id');
+$childrenStmt = $db->prepare("SELECT s.id, s.name, s.surname, s.course_id, s.mosque_id, m.name AS mosque_name FROM students s JOIN mosques m ON s.mosque_id=m.id WHERE s.parent_id=? AND s.status='active'");
+$childrenStmt->execute([$pid]);
+$children = $childrenStmt->fetchAll();
 
-$homeworks = [];
-if (!empty($mosque_ids)) {
-    $in = implode(',', array_fill(0, count($mosque_ids), '?'));
-    $hw_stmt = $db->prepare("
-        SELECT h.*, m.name AS mosque_name
+$rows = [];
+foreach ($children as $child) {
+    $stmt = $db->prepare("
+        SELECT h.*, hs.id AS hs_id, hs.status AS my_status, hs.completed_at
         FROM homeworks h
-        JOIN mosques m ON h.mosque_id = m.id
-        WHERE h.mosque_id IN ($in) AND h.status = 'active'
+        LEFT JOIN homework_students hs ON hs.homework_id = h.id AND hs.student_id = ?
+        WHERE h.mosque_id = ?
+          AND h.status = 'active'
+          AND (h.course_id IS NULL OR h.course_id = ?)
+          AND (
+                hs.id IS NOT NULL
+                OR NOT EXISTS (SELECT 1 FROM homework_students hs2 WHERE hs2.homework_id = h.id)
+              )
         ORDER BY h.due_date ASC, h.created_at DESC
     ");
-    $hw_stmt->execute($mosque_ids);
-    $homeworks = $hw_stmt->fetchAll();
+    $stmt->execute([$child['id'], $child['mosque_id'], $child['course_id']]);
+    foreach ($stmt->fetchAll() as $h) {
+        $h['child_name'] = $child['name'] . ' ' . $child['surname'];
+        $h['mosque_name'] = $child['mosque_name'];
+        $h['effective_status'] = $h['my_status'] ?? 'active';
+        $rows[] = $h;
+    }
 }
 
 $page_title = 'Ödevler';
@@ -37,31 +41,33 @@ include 'layout/header.php';
     <div style="font-size:48px">📝</div>
     <div>
       <div style="font-size:20px;font-weight:800">Ödev Takibi</div>
-      <div style="opacity:.8;font-size:13px">Çocuğunuzun camisinden verilen ödevler</div>
+      <div style="opacity:.8;font-size:13px">Çocuğunuza özel olarak verilen ödevler</div>
     </div>
   </div>
 </div>
 
-<?php if (empty($homeworks)): ?>
+<?php if (empty($rows)): ?>
 <div class="card">
   <div class="empty-state" style="padding:60px 20px">
     <div class="empty-state-icon">📝</div>
     <div class="empty-state-title">Şu an aktif ödev yok</div>
-    <div class="empty-state-desc">Cami personeli yeni ödev eklediğinde burada görünecek.</div>
+    <div class="empty-state-desc">Hocası yeni ödev eklediğinde burada görünecek.</div>
   </div>
 </div>
 <?php else: ?>
 
 <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px">
-  <?php foreach ($homeworks as $h):
-    $overdue = $h['due_date'] && $h['due_date'] < date('Y-m-d');
+  <?php foreach ($rows as $h):
+    $overdue = $h['due_date'] && $h['due_date'] < date('Y-m-d') && $h['effective_status'] !== 'done';
+    $isDone = $h['effective_status'] === 'done';
   ?>
-  <div class="card" style="border-left:4px solid <?= $overdue ? '#dc2626' : '#1a7a3a' ?>">
+  <div class="card" style="border-left:4px solid <?= $isDone ? '#1a7a3a' : ($overdue ? '#dc2626' : '#c9a227') ?>">
     <div class="card-header">
       <div>
         <strong><?= sanitize($h['title']) ?></strong><br>
-        <small style="color:#94a3b8">🕌 <?= sanitize($h['mosque_name']) ?></small>
+        <small style="color:#94a3b8">🧒 <?= sanitize($h['child_name']) ?> · 🕌 <?= sanitize($h['mosque_name']) ?></small>
       </div>
+      <span class="badge <?= $isDone ? 'badge-success' : 'badge-warning' ?>"><?= $isDone ? '✅ Tamamlandı' : '📝 Aktif' ?></span>
     </div>
     <div class="card-body">
       <?php if ($h['description']): ?>

@@ -1,0 +1,275 @@
+2026-07-05T21:52:11.770769599Z #8 19.13 
+2026-07-05T21:52:11.770771989Z #8 19.13 See any operating system documentation about shared libraries for
+2026-07-05T21:52:11.77077434Z #8 19.13 more information, such as the ld(1) and ld.so(8) manual pages.
+2026-07-05T21:52:11.77077684Z #8 19.13 ----------------------------------------------------------------------
+2026-07-05T21:52:11.77077924Z #8 19.13 
+2026-07-05T21:52:11.77078236Z #8 19.13 Build complete.
+2026-07-05T21:52:11.77078497Z #8 19.13 Don't forget to run 'make test'.
+2026-07-05T21:52:11.77078734Z #8 19.13 
+2026-07-05T21:52:11.77080068Z #8 19.16 + strip --strip-all modules/pdo.so
+2026-07-05T21:52:11.77080549Z #8 19.19 Installing shared extensions:     /usr/local/lib/php/extensions/no-debug-non-zts-20230831/
+2026-07-05T21:52:11.778742594Z #8 19.34 Installing header files:          /usr/local/include/php/
+2026-07-05T21:52:11.888008865Z #8 19.45 Installing PDO headers:           /usr/local/include/php/ext/pdo/
+2026-07-05T21:52:12.05450679Z #8 19.62 
+2026-07-05T21:52:12.054530941Z #8 19.62 warning: pdo (pdo) is already loaded!
+2026-07-05T21:52:12.054535581Z #8 19.62 
+2026-07-05T21:52:12.289919181Z #8 19.62 find . -name \*.gcno -o -name \*.gcda | xargs rm -f
+2026-07-05T21:52:12.289942662Z #8 19.63 find . -name \*.lo -o -name \*.o -o -name \*.dep | xargs rm -f
+2026-07-05T21:52:12.289947931Z #8 19.63 find . -name \*.la -o -name \*.a | xargs rm -f
+2026-07-05T21:52:12.289952562Z #8 19.64 find . -name \*.so | xargs rm -f
+2026-07-05T21:52:12.289956622Z #8 19.66 find . -name .libs -a -type d|xargs rm -rf
+2026-07-05T21:52:12.289960712Z #8 19.67 rm -f libphp.la      modules/* libs/*
+2026-07-05T21:52:12.289964692Z #8 19.67 rm -f ext/opcache/jit/zend_jit_x86.c
+2026-07-05T21:52:12.289968822Z #8 19.67 rm -f ext/opcache/jit/zend_jit_arm64.c
+2026-07-05T21:52:12.289972782Z #8 19.67 rm -f ext/opcache/minilua
+2026-07-05T21:52:12.289981422Z #8 19.71 Configuring for:
+2026-07-05T21:52:12.289985532Z #8 19.71 PHP Api Version:         20230831
+2026-07-05T21:52:12.289989692Z #8 19.71 Zend Module Api No:      20230831
+2026-07-05T21:52:12.289993823Z #8 19.71 Zend Extension Api No:   420230831
+2026-07-05T21:52:12.955491072Z #8 20.41 checking for grep that handles long lines and -e... /usr/bin/grep
+2026-07-05T21:52:12.955512093Z #8 20.41 checking for egrep... /usr/bin/grep -E
+2026-07-05T21:52:12.955517443Z #8 20.41 checking for a sed that does not truncate output... /usr/bin/sed
+2026-07-05T21:52:12.955522793Z #8 20.44 checking for pkg-config... /usr/bin/pkg-config
+2026-07-05T21:52:12.955527293Z #8 20.44 checking pkg-config is at least version 0.9.0... yes
+2026-07-05T21:52:12.955532993Z #8 20.45 checking for cc... cc
+2026-07-05T21:52:12.955546203Z #8 20.48 checking whether the C compiler works... yes
+2026-07-05T21:52:12.955548463Z #8 20.52 checking for C compiler default output file name... a.out
+2026-07-05T21:52:13.066749834Z #8 20.52 checking for suffix of executables... 
+2026-07-05T21:52:13.066767535Z #8 20.56 checking whether we are cross compiling... no
+2026-07-05T21:52:13.066771024Z #8 20.61 checking for suffix of object files... o
+2026-07-05T21:52:13.186570083Z #8 20.63 checking whether the compiler supports GNU C... yes
+2026-07-05T21:52:13.186590514Z #8 20.65 checking whether cc accepts -g... yes
+2026-07-05T21:52:13.186595054Z #8 20.67 checking for cc option to enable C11 features... none needed
+2026-07-05T21:52:13.186598824Z #8 20.72 checking how to run the C preprocessor... cc -E
+2026-07-05T21:52:13.288486112Z #8 20.78 checking for icc... no
+2026-07-05T21:52:13.288510263Z #8 20.79 checking for suncc... no
+2026-07-05T21:52:13.288513772Z #8 20.80 checking for system library directory... lib
+2026-07-05T21:52:13.288515783Z #8 20.80 checking if compiler supports -Wl,-rpath,... yes
+2026-07-05T21:52:13.288518913Z #8 20.85 checking build system type... x86_64-pc-linux-gnu
+2026-07-05T21:52:13.390959782Z #8 20.85 checking host system type... x86_64-pc-linux-gnu
+2026-07-05T21:52:13.390977163Z #8 20.85 checking target system type... x86_64-pc-linux-gnu
+2026-07-05T21:52:13.390981603Z #8 20.89 checking for PHP prefix... /usr/local
+2026-07-05T21:52:13.390985243Z #8 20.89 checking for PHP includes... -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib
+2026-07-05T21:52:13.390989553Z #8 20.89 checking for PHP extension directory... /usr/local/lib/php/extensions/no-debug-non-zts-20230831
+2026-07-05T21:52:13.390993493Z #8 20.89 checking for PHP installed headers prefix... /usr/local/include/php
+2026-07-05T21:52:13.390996673Z #8 20.89 checking if debug is enabled... no
+2026-07-05T21:52:13.390999313Z #8 20.91 checking if zts is enabled... no
+2026-07-05T21:52:13.391002213Z #8 20.93 checking for gawk... no
+2026-07-05T21:52:13.391004813Z #8 20.93 checking for nawk... nawk
+2026-07-05T21:52:13.391007383Z #8 20.93 checking if nawk is broken... no
+2026-07-05T21:52:13.391009873Z #8 20.93 checking for MySQL support for PDO... yes, shared
+2026-07-05T21:52:13.391012503Z #8 20.93 checking for the location of libz... no
+2026-07-05T21:52:13.391015163Z #8 20.93 checking for MySQL UNIX socket location... 
+2026-07-05T21:52:13.391018123Z #8 20.93 checking for PDO includes... /usr/local/include/php/ext
+2026-07-05T21:52:13.391021173Z #8 20.94 checking for a sed that does not truncate output... /usr/bin/sed
+2026-07-05T21:52:13.391024084Z #8 20.95 checking for ld used by cc... /usr/bin/ld
+2026-07-05T21:52:13.391027053Z #8 20.95 checking if the linker (/usr/bin/ld) is GNU ld... yes
+2026-07-05T21:52:13.391029864Z #8 20.95 checking for /usr/bin/ld option to reload object files... -r
+2026-07-05T21:52:13.391032794Z #8 20.95 checking for BSD-compatible nm... /usr/bin/nm -B
+2026-07-05T21:52:13.497258682Z #8 20.96 checking whether ln -s works... yes
+2026-07-05T21:52:13.497276762Z #8 20.96 checking how to recognize dependent libraries... pass_all
+2026-07-05T21:52:13.497280352Z #8 20.97 checking for stdio.h... yes
+2026-07-05T21:52:13.497283582Z #8 21.00 checking for stdlib.h... yes
+2026-07-05T21:52:13.497286862Z #8 21.03 checking for string.h... yes
+2026-07-05T21:52:13.61366801Z #8 21.06 checking for inttypes.h... yes
+2026-07-05T21:52:13.613685251Z #8 21.09 checking for stdint.h... yes
+2026-07-05T21:52:13.6136883Z #8 21.12 checking for strings.h... yes
+2026-07-05T21:52:13.613700261Z #8 21.15 checking for sys/stat.h... yes
+2026-07-05T21:52:13.785035256Z #8 21.18 checking for sys/types.h... yes
+2026-07-05T21:52:13.785052426Z #8 21.21 checking for unistd.h... yes
+2026-07-05T21:52:13.785055046Z #8 21.24 checking for dlfcn.h... yes
+2026-07-05T21:52:13.785057656Z #8 21.27 checking the maximum length of command line arguments... 1572864
+2026-07-05T21:52:13.785059646Z #8 21.28 checking command to parse /usr/bin/nm -B output from cc object... ok
+2026-07-05T21:52:13.89493881Z #8 21.35 checking for objdir... .libs
+2026-07-05T21:52:13.89495933Z #8 21.35 checking for ar... ar
+2026-07-05T21:52:13.89496298Z #8 21.35 checking for ranlib... ranlib
+2026-07-05T21:52:13.89496641Z #8 21.36 checking for strip... strip
+2026-07-05T21:52:13.89496994Z #8 21.41 checking if cc supports -fno-rtti -fno-exceptions... no
+2026-07-05T21:52:13.894972971Z #8 21.44 checking for cc option to produce PIC... -fPIC
+2026-07-05T21:52:13.894976Z #8 21.44 checking if cc PIC flag -fPIC works... yes
+2026-07-05T21:52:14.011146034Z #8 21.46 checking if cc static flag -static works... yes
+2026-07-05T21:52:14.011167995Z #8 21.54 checking if cc supports -c -o file.o... yes
+2026-07-05T21:52:14.22552103Z #8 21.58 checking whether the cc linker (/usr/bin/ld -m elf_x86_64) supports shared libraries... yes
+2026-07-05T21:52:14.22553751Z #8 21.59 checking whether -lc should be explicitly linked in... no
+2026-07-05T21:52:14.22554004Z #8 21.62 checking dynamic linker characteristics... GNU/Linux ld.so
+2026-07-05T21:52:14.22554199Z #8 21.64 checking how to hardcode library paths into programs... immediate
+2026-07-05T21:52:14.22554463Z #8 21.64 checking whether stripping libraries is possible... yes
+2026-07-05T21:52:14.22554658Z #8 21.64 checking if libtool supports shared libraries... yes
+2026-07-05T21:52:14.22554846Z #8 21.64 checking whether to build shared libraries... yes
+2026-07-05T21:52:14.22555033Z #8 21.64 checking whether to build static libraries... no
+2026-07-05T21:52:14.236096518Z #8 21.80 
+2026-07-05T21:52:14.236339054Z #8 21.80 creating libtool
+2026-07-05T21:52:14.383218813Z #8 21.82 appending configuration tag "CXX" to libtool
+2026-07-05T21:52:14.383234773Z #8 21.89 configure: patching config.h.in
+2026-07-05T21:52:14.383237353Z #8 21.89 configure: creating ./config.status
+2026-07-05T21:52:14.383239483Z #8 21.95 config.status: creating config.h
+2026-07-05T21:52:14.550751629Z #8 21.98 /bin/bash /usr/src/php/ext/pdo_mysql/libtool --tag=CC --mode=compile cc -I. -I/usr/src/php/ext/pdo_mysql -I/usr/src/php/ext/pdo_mysql/include -I/usr/src/php/ext/pdo_mysql/main -I/usr/src/php/ext/pdo_mysql -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE   -I/usr/local/include/php/ext -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/pdo_mysql/pdo_mysql.c -o pdo_mysql.lo  -MMD -MF pdo_mysql.dep -MT pdo_mysql.lo
+2026-07-05T21:52:14.550773149Z #8 22.12 mkdir .libs
+2026-07-05T21:52:14.703476589Z #8 22.12  cc -I. -I/usr/src/php/ext/pdo_mysql -I/usr/src/php/ext/pdo_mysql/include -I/usr/src/php/ext/pdo_mysql/main -I/usr/src/php/ext/pdo_mysql -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I/usr/local/include/php/ext -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/pdo_mysql/pdo_mysql.c -MMD -MF pdo_mysql.dep -MT pdo_mysql.lo  -fPIC -DPIC -o .libs/pdo_mysql.o
+2026-07-05T21:52:14.711117587Z #8 22.28 /bin/bash /usr/src/php/ext/pdo_mysql/libtool --tag=CC --mode=compile cc -I. -I/usr/src/php/ext/pdo_mysql -I/usr/src/php/ext/pdo_mysql/include -I/usr/src/php/ext/pdo_mysql/main -I/usr/src/php/ext/pdo_mysql -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE   -I/usr/local/include/php/ext -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/pdo_mysql/mysql_driver.c -o mysql_driver.lo  -MMD -MF mysql_driver.dep -MT mysql_driver.lo
+2026-07-05T21:52:14.820895798Z #8 22.39  cc -I. -I/usr/src/php/ext/pdo_mysql -I/usr/src/php/ext/pdo_mysql/include -I/usr/src/php/ext/pdo_mysql/main -I/usr/src/php/ext/pdo_mysql -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I/usr/local/include/php/ext -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/pdo_mysql/mysql_driver.c -MMD -MF mysql_driver.dep -MT mysql_driver.lo  -fPIC -DPIC -o .libs/mysql_driver.o
+2026-07-05T21:52:15.195592401Z #8 22.76 /bin/bash /usr/src/php/ext/pdo_mysql/libtool --tag=CC --mode=compile cc -I. -I/usr/src/php/ext/pdo_mysql -I/usr/src/php/ext/pdo_mysql/include -I/usr/src/php/ext/pdo_mysql/main -I/usr/src/php/ext/pdo_mysql -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE   -I/usr/local/include/php/ext -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/pdo_mysql/mysql_statement.c -o mysql_statement.lo  -MMD -MF mysql_statement.dep -MT mysql_statement.lo
+2026-07-05T21:52:15.304117936Z #8 22.87  cc -I. -I/usr/src/php/ext/pdo_mysql -I/usr/src/php/ext/pdo_mysql/include -I/usr/src/php/ext/pdo_mysql/main -I/usr/src/php/ext/pdo_mysql -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I/usr/local/include/php/ext -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/pdo_mysql/mysql_statement.c -MMD -MF mysql_statement.dep -MT mysql_statement.lo  -fPIC -DPIC -o .libs/mysql_statement.o
+2026-07-05T21:52:15.586730214Z #8 23.15 /bin/bash /usr/src/php/ext/pdo_mysql/libtool --tag=CC --mode=link cc -shared -I/usr/src/php/ext/pdo_mysql/include -I/usr/src/php/ext/pdo_mysql/main -I/usr/src/php/ext/pdo_mysql -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE  -Wl,-O1 -pie  -o pdo_mysql.la -export-dynamic -avoid-version -prefer-pic -module -rpath /usr/src/php/ext/pdo_mysql/modules  pdo_mysql.lo mysql_driver.lo mysql_statement.lo 
+2026-07-05T21:52:15.699533298Z #8 23.27 cc -shared  .libs/pdo_mysql.o .libs/mysql_driver.o .libs/mysql_statement.o   -Wl,-O1 -Wl,-soname -Wl,pdo_mysql.so -o .libs/pdo_mysql.so
+2026-07-05T21:52:15.806356028Z #8 23.28 creating pdo_mysql.la
+2026-07-05T21:52:15.806377808Z #8 23.29 (cd .libs && rm -f pdo_mysql.la && ln -s ../pdo_mysql.la pdo_mysql.la)
+2026-07-05T21:52:15.806383078Z #8 23.29 /bin/bash /usr/src/php/ext/pdo_mysql/libtool --tag=CC --mode=install cp ./pdo_mysql.la /usr/src/php/ext/pdo_mysql/modules
+2026-07-05T21:52:15.806387128Z #8 23.32 cp ./.libs/pdo_mysql.so /usr/src/php/ext/pdo_mysql/modules/pdo_mysql.so
+2026-07-05T21:52:15.806391459Z #8 23.33 cp ./.libs/pdo_mysql.lai /usr/src/php/ext/pdo_mysql/modules/pdo_mysql.la
+2026-07-05T21:52:15.806395409Z #8 23.34 PATH="$PATH:/sbin" ldconfig -n /usr/src/php/ext/pdo_mysql/modules
+2026-07-05T21:52:15.806399229Z #8 23.35 ----------------------------------------------------------------------
+2026-07-05T21:52:15.806403589Z #8 23.35 Libraries have been installed in:
+2026-07-05T21:52:15.806407619Z #8 23.35    /usr/src/php/ext/pdo_mysql/modules
+2026-07-05T21:52:15.806410039Z #8 23.35 
+2026-07-05T21:52:15.806412499Z #8 23.35 If you ever happen to want to link against installed libraries
+2026-07-05T21:52:15.806414809Z #8 23.35 in a given directory, LIBDIR, you must either use libtool, and
+2026-07-05T21:52:15.806417139Z #8 23.35 specify the full pathname of the library, or use the `-LLIBDIR'
+2026-07-05T21:52:15.806419419Z #8 23.35 flag during linking and do at least one of the following:
+2026-07-05T21:52:15.806421849Z #8 23.35    - add LIBDIR to the `LD_LIBRARY_PATH' environment variable
+2026-07-05T21:52:15.806424199Z #8 23.35      during execution
+2026-07-05T21:52:15.806426539Z #8 23.35    - add LIBDIR to the `LD_RUN_PATH' environment variable
+2026-07-05T21:52:15.806428849Z #8 23.35      during linking
+2026-07-05T21:52:15.806431599Z #8 23.35    - use the `-Wl,--rpath -Wl,LIBDIR' linker flag
+2026-07-05T21:52:15.80643396Z #8 23.35    - have your system administrator add LIBDIR to `/etc/ld.so.conf'
+2026-07-05T21:52:15.806436329Z #8 23.35 
+2026-07-05T21:52:15.80643866Z #8 23.35 See any operating system documentation about shared libraries for
+2026-07-05T21:52:15.80644101Z #8 23.35 more information, such as the ld(1) and ld.so(8) manual pages.
+2026-07-05T21:52:15.80644332Z #8 23.35 ----------------------------------------------------------------------
+2026-07-05T21:52:15.8064458Z #8 23.35 
+2026-07-05T21:52:15.8064482Z #8 23.35 Build complete.
+2026-07-05T21:52:15.80645059Z #8 23.35 Don't forget to run 'make test'.
+2026-07-05T21:52:15.80645291Z #8 23.35 
+2026-07-05T21:52:15.80645523Z #8 23.37 + strip --strip-all modules/pdo_mysql.so
+2026-07-05T21:52:15.944484496Z #8 23.40 Installing shared extensions:     /usr/local/lib/php/extensions/no-debug-non-zts-20230831/
+2026-07-05T21:52:15.944503976Z #8 23.51 find . -name \*.gcno -o -name \*.gcda | xargs rm -f
+2026-07-05T21:52:16.149298783Z #8 23.51 find . -name \*.lo -o -name \*.o -o -name \*.dep | xargs rm -f
+2026-07-05T21:52:16.149318644Z #8 23.52 find . -name \*.la -o -name \*.a | xargs rm -f
+2026-07-05T21:52:16.149322504Z #8 23.52 find . -name \*.so | xargs rm -f
+2026-07-05T21:52:16.149325014Z #8 23.53 find . -name .libs -a -type d|xargs rm -rf
+2026-07-05T21:52:16.149327614Z #8 23.53 rm -f libphp.la      modules/* libs/*
+2026-07-05T21:52:16.149330114Z #8 23.53 rm -f ext/opcache/jit/zend_jit_x86.c
+2026-07-05T21:52:16.149332474Z #8 23.54 rm -f ext/opcache/jit/zend_jit_arm64.c
+2026-07-05T21:52:16.149334694Z #8 23.54 rm -f ext/opcache/minilua
+2026-07-05T21:52:16.149345324Z #8 23.56 Configuring for:
+2026-07-05T21:52:16.149351255Z #8 23.56 PHP Api Version:         20230831
+2026-07-05T21:52:16.149353635Z #8 23.56 Zend Module Api No:      20230831
+2026-07-05T21:52:16.149355985Z #8 23.56 Zend Extension Api No:   420230831
+2026-07-05T21:52:16.919398267Z #8 24.31 checking for grep that handles long lines and -e... /usr/bin/grep
+2026-07-05T21:52:16.919419028Z #8 24.31 checking for egrep... /usr/bin/grep -E
+2026-07-05T21:52:16.919422757Z #8 24.31 checking for a sed that does not truncate output... /usr/bin/sed
+2026-07-05T21:52:16.919426658Z #8 24.34 checking for pkg-config... /usr/bin/pkg-config
+2026-07-05T21:52:16.919429598Z #8 24.34 checking pkg-config is at least version 0.9.0... yes
+2026-07-05T21:52:16.919433168Z #8 24.35 checking for cc... cc
+2026-07-05T21:52:16.919436178Z #8 24.40 checking whether the C compiler works... yes
+2026-07-05T21:52:17.061866495Z #8 24.49 checking for C compiler default output file name... a.out
+2026-07-05T21:52:17.061885645Z #8 24.49 checking for suffix of executables... 
+2026-07-05T21:52:17.061891285Z #8 24.55 checking whether we are cross compiling... no
+2026-07-05T21:52:17.216983014Z #8 24.63 checking for suffix of object files... o
+2026-07-05T21:52:17.217004125Z #8 24.66 checking whether the compiler supports GNU C... yes
+2026-07-05T21:52:17.217009325Z #8 24.69 checking whether cc accepts -g... yes
+2026-07-05T21:52:17.217014025Z #8 24.72 checking for cc option to enable C11 features... none needed
+2026-07-05T21:52:17.378460995Z #8 24.78 checking how to run the C preprocessor... cc -E
+2026-07-05T21:52:17.378481976Z #8 24.86 checking for icc... no
+2026-07-05T21:52:17.378493366Z #8 24.87 checking for suncc... no
+2026-07-05T21:52:17.378499736Z #8 24.88 checking for system library directory... lib
+2026-07-05T21:52:17.378505576Z #8 24.88 checking if compiler supports -Wl,-rpath,... yes
+2026-07-05T21:52:17.484163692Z #8 24.95 checking build system type... x86_64-pc-linux-gnu
+2026-07-05T21:52:17.484181473Z #8 24.95 checking host system type... x86_64-pc-linux-gnu
+2026-07-05T21:52:17.484185343Z #8 24.95 checking target system type... x86_64-pc-linux-gnu
+2026-07-05T21:52:17.484189103Z #8 24.99 checking for PHP prefix... /usr/local
+2026-07-05T21:52:17.484192833Z #8 24.99 checking for PHP includes... -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib
+2026-07-05T21:52:17.484196973Z #8 24.99 checking for PHP extension directory... /usr/local/lib/php/extensions/no-debug-non-zts-20230831
+2026-07-05T21:52:17.484200543Z #8 24.99 checking for PHP installed headers prefix... /usr/local/include/php
+2026-07-05T21:52:17.484213733Z #8 24.99 checking if debug is enabled... no
+2026-07-05T21:52:17.484216953Z #8 25.01 checking if zts is enabled... no
+2026-07-05T21:52:17.484220713Z #8 25.03 checking for gawk... no
+2026-07-05T21:52:17.484223834Z #8 25.03 checking for nawk... nawk
+2026-07-05T21:52:17.484227114Z #8 25.03 checking if nawk is broken... no
+2026-07-05T21:52:17.484230114Z #8 25.03 checking for MySQLi support... yes, shared
+2026-07-05T21:52:17.484233134Z #8 25.03 checking for specified location of the MySQL UNIX socket... no
+2026-07-05T21:52:17.484236204Z #8 25.03 checking for MySQL UNIX socket location... no
+2026-07-05T21:52:17.613507768Z #8 25.05 checking for a sed that does not truncate output... /usr/bin/sed
+2026-07-05T21:52:17.613526289Z #8 25.07 checking for ld used by cc... /usr/bin/ld
+2026-07-05T21:52:17.613529949Z #8 25.08 checking if the linker (/usr/bin/ld) is GNU ld... yes
+2026-07-05T21:52:17.613533219Z #8 25.08 checking for /usr/bin/ld option to reload object files... -r
+2026-07-05T21:52:17.613547859Z #8 25.08 checking for BSD-compatible nm... /usr/bin/nm -B
+2026-07-05T21:52:17.613550619Z #8 25.08 checking whether ln -s works... yes
+2026-07-05T21:52:17.613552569Z #8 25.08 checking how to recognize dependent libraries... pass_all
+2026-07-05T21:52:17.613554469Z #8 25.11 checking for stdio.h... yes
+2026-07-05T21:52:17.613556339Z #8 25.14 checking for stdlib.h... yes
+2026-07-05T21:52:17.735965362Z #8 25.18 checking for string.h... yes
+2026-07-05T21:52:17.735983163Z #8 25.21 checking for inttypes.h... yes
+2026-07-05T21:52:17.735986232Z #8 25.24 checking for stdint.h... yes
+2026-07-05T21:52:17.735988813Z #8 25.27 checking for strings.h... yes
+2026-07-05T21:52:17.857372774Z #8 25.30 checking for sys/stat.h... yes
+2026-07-05T21:52:17.857390804Z #8 25.35 checking for sys/types.h... yes
+2026-07-05T21:52:17.857394024Z #8 25.39 checking for unistd.h... yes
+2026-07-05T21:52:18.034110211Z #8 25.42 checking for dlfcn.h... yes
+2026-07-05T21:52:18.034129111Z #8 25.47 checking the maximum length of command line arguments... 1572864
+2026-07-05T21:52:18.034132411Z #8 25.48 checking command to parse /usr/bin/nm -B output from cc object... ok
+2026-07-05T21:52:18.143979584Z #8 25.60 checking for objdir... .libs
+2026-07-05T21:52:18.144000294Z #8 25.60 checking for ar... ar
+2026-07-05T21:52:18.144005134Z #8 25.60 checking for ranlib... ranlib
+2026-07-05T21:52:18.144009214Z #8 25.60 checking for strip... strip
+2026-07-05T21:52:18.32355602Z #8 25.71 checking if cc supports -fno-rtti -fno-exceptions... no
+2026-07-05T21:52:18.32357222Z #8 25.74 checking for cc option to produce PIC... -fPIC
+2026-07-05T21:52:18.32357494Z #8 25.74 checking if cc PIC flag -fPIC works... yes
+2026-07-05T21:52:18.32357706Z #8 25.78 checking if cc static flag -static works... yes
+2026-07-05T21:52:18.427221834Z #8 25.89 checking if cc supports -c -o file.o... yes
+2026-07-05T21:52:18.427246465Z #8 25.93 checking whether the cc linker (/usr/bin/ld -m elf_x86_64) supports shared libraries... yes
+2026-07-05T21:52:18.427250975Z #8 25.94 checking whether -lc should be explicitly linked in... no
+2026-07-05T21:52:18.427254015Z #8 25.98 checking dynamic linker characteristics... GNU/Linux ld.so
+2026-07-05T21:52:18.580097727Z #8 25.99 checking how to hardcode library paths into programs... immediate
+2026-07-05T21:52:18.580127108Z #8 25.99 checking whether stripping libraries is possible... yes
+2026-07-05T21:52:18.580132208Z #8 26.00 checking if libtool supports shared libraries... yes
+2026-07-05T21:52:18.580137858Z #8 26.00 checking whether to build shared libraries... yes
+2026-07-05T21:52:18.580142708Z #8 26.00 checking whether to build static libraries... no
+2026-07-05T21:52:18.590909271Z #8 26.16 
+2026-07-05T21:52:18.590932392Z #8 26.16 creating libtool
+2026-07-05T21:52:18.691550913Z #8 26.18 appending configuration tag "CXX" to libtool
+2026-07-05T21:52:18.691570034Z #8 26.25 configure: patching config.h.in
+2026-07-05T21:52:18.691573944Z #8 26.26 configure: creating ./config.status
+2026-07-05T21:52:18.801362165Z #8 26.32 config.status: creating config.h
+2026-07-05T21:52:18.801385086Z #8 26.37 /bin/bash /usr/src/php/ext/mysqli/libtool --tag=CC --mode=compile cc -I. -I/usr/src/php/ext/mysqli -I/usr/src/php/ext/mysqli/include -I/usr/src/php/ext/mysqli/main -I/usr/src/php/ext/mysqli -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE   -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/mysqli/mysqli.c -o mysqli.lo  -MMD -MF mysqli.dep -MT mysqli.lo
+2026-07-05T21:52:18.920300806Z #8 26.49 mkdir .libs
+2026-07-05T21:52:19.073533966Z #8 26.49  cc -I. -I/usr/src/php/ext/mysqli -I/usr/src/php/ext/mysqli/include -I/usr/src/php/ext/mysqli/main -I/usr/src/php/ext/mysqli -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/mysqli/mysqli.c -MMD -MF mysqli.dep -MT mysqli.lo  -fPIC -DPIC -o .libs/mysqli.o
+2026-07-05T21:52:19.603829278Z #8 27.17 /bin/bash /usr/src/php/ext/mysqli/libtool --tag=CC --mode=compile cc -I. -I/usr/src/php/ext/mysqli -I/usr/src/php/ext/mysqli/include -I/usr/src/php/ext/mysqli/main -I/usr/src/php/ext/mysqli -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE   -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/mysqli/mysqli_api.c -o mysqli_api.lo  -MMD -MF mysqli_api.dep -MT mysqli_api.lo
+2026-07-05T21:52:19.716216494Z #8 27.28  cc -I. -I/usr/src/php/ext/mysqli -I/usr/src/php/ext/mysqli/include -I/usr/src/php/ext/mysqli/main -I/usr/src/php/ext/mysqli -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/mysqli/mysqli_api.c -MMD -MF mysqli_api.dep -MT mysqli_api.lo  -fPIC -DPIC -o .libs/mysqli_api.o
+2026-07-05T21:52:20.738722949Z #8 28.30 /bin/bash /usr/src/php/ext/mysqli/libtool --tag=CC --mode=compile cc -I. -I/usr/src/php/ext/mysqli -I/usr/src/php/ext/mysqli/include -I/usr/src/php/ext/mysqli/main -I/usr/src/php/ext/mysqli -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE   -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/mysqli/mysqli_prop.c -o mysqli_prop.lo  -MMD -MF mysqli_prop.dep -MT mysqli_prop.lo
+2026-07-05T21:52:20.844483387Z #8 28.41  cc -I. -I/usr/src/php/ext/mysqli -I/usr/src/php/ext/mysqli/include -I/usr/src/php/ext/mysqli/main -I/usr/src/php/ext/mysqli -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/mysqli/mysqli_prop.c -MMD -MF mysqli_prop.dep -MT mysqli_prop.lo  -fPIC -DPIC -o .libs/mysqli_prop.o
+2026-07-05T21:52:21.178873796Z #8 28.74 /bin/bash /usr/src/php/ext/mysqli/libtool --tag=CC --mode=compile cc -I. -I/usr/src/php/ext/mysqli -I/usr/src/php/ext/mysqli/include -I/usr/src/php/ext/mysqli/main -I/usr/src/php/ext/mysqli -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE   -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/mysqli/mysqli_nonapi.c -o mysqli_nonapi.lo  -MMD -MF mysqli_nonapi.dep -MT mysqli_nonapi.lo
+2026-07-05T21:52:21.283884159Z #8 28.85  cc -I. -I/usr/src/php/ext/mysqli -I/usr/src/php/ext/mysqli/include -I/usr/src/php/ext/mysqli/main -I/usr/src/php/ext/mysqli -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/mysqli/mysqli_nonapi.c -MMD -MF mysqli_nonapi.dep -MT mysqli_nonapi.lo  -fPIC -DPIC -o .libs/mysqli_nonapi.o
+2026-07-05T21:52:21.763533502Z #8 29.33 /bin/bash /usr/src/php/ext/mysqli/libtool --tag=CC --mode=compile cc -I. -I/usr/src/php/ext/mysqli -I/usr/src/php/ext/mysqli/include -I/usr/src/php/ext/mysqli/main -I/usr/src/php/ext/mysqli -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE   -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/mysqli/mysqli_report.c -o mysqli_report.lo  -MMD -MF mysqli_report.dep -MT mysqli_report.lo
+2026-07-05T21:52:21.874455347Z #8 29.44  cc -I. -I/usr/src/php/ext/mysqli -I/usr/src/php/ext/mysqli/include -I/usr/src/php/ext/mysqli/main -I/usr/src/php/ext/mysqli -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/mysqli/mysqli_report.c -MMD -MF mysqli_report.dep -MT mysqli_report.lo  -fPIC -DPIC -o .libs/mysqli_report.o
+2026-07-05T21:52:22.018597Z #8 29.58 /bin/bash /usr/src/php/ext/mysqli/libtool --tag=CC --mode=compile cc -I. -I/usr/src/php/ext/mysqli -I/usr/src/php/ext/mysqli/include -I/usr/src/php/ext/mysqli/main -I/usr/src/php/ext/mysqli -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE   -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/mysqli/mysqli_driver.c -o mysqli_driver.lo  -MMD -MF mysqli_driver.dep -MT mysqli_driver.lo
+2026-07-05T21:52:22.126334059Z #8 29.69  cc -I. -I/usr/src/php/ext/mysqli -I/usr/src/php/ext/mysqli/include -I/usr/src/php/ext/mysqli/main -I/usr/src/php/ext/mysqli -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/mysqli/mysqli_driver.c -MMD -MF mysqli_driver.dep -MT mysqli_driver.lo  -fPIC -DPIC -o .libs/mysqli_driver.o
+2026-07-05T21:52:22.274093246Z #8 29.84 /bin/bash /usr/src/php/ext/mysqli/libtool --tag=CC --mode=compile cc -I. -I/usr/src/php/ext/mysqli -I/usr/src/php/ext/mysqli/include -I/usr/src/php/ext/mysqli/main -I/usr/src/php/ext/mysqli -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE   -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/mysqli/mysqli_warning.c -o mysqli_warning.lo  -MMD -MF mysqli_warning.dep -MT mysqli_warning.lo
+2026-07-05T21:52:22.384249765Z #8 29.95  cc -I. -I/usr/src/php/ext/mysqli -I/usr/src/php/ext/mysqli/include -I/usr/src/php/ext/mysqli/main -I/usr/src/php/ext/mysqli -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/mysqli/mysqli_warning.c -MMD -MF mysqli_warning.dep -MT mysqli_warning.lo  -fPIC -DPIC -o .libs/mysqli_warning.o
+2026-07-05T21:52:22.578845491Z #8 30.14 /bin/bash /usr/src/php/ext/mysqli/libtool --tag=CC --mode=compile cc -I. -I/usr/src/php/ext/mysqli -I/usr/src/php/ext/mysqli/include -I/usr/src/php/ext/mysqli/main -I/usr/src/php/ext/mysqli -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE   -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/mysqli/mysqli_exception.c -o mysqli_exception.lo  -MMD -MF mysqli_exception.dep -MT mysqli_exception.lo
+2026-07-05T21:52:22.688382197Z #8 30.25  cc -I. -I/usr/src/php/ext/mysqli -I/usr/src/php/ext/mysqli/include -I/usr/src/php/ext/mysqli/main -I/usr/src/php/ext/mysqli -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/mysqli/mysqli_exception.c -MMD -MF mysqli_exception.dep -MT mysqli_exception.lo  -fPIC -DPIC -o .libs/mysqli_exception.o
+2026-07-05T21:52:55.030537948Z ==> Your service is live 🎉
+2026-07-05T21:52:55.069210249Z [Sun Jul  5 21:52:55 2026] 127.0.0.1:48686 Accepted
+2026-07-05T21:52:55.069955732Z [Sun Jul  5 21:52:55 2026] 127.0.0.1:48686 [200]: GET /
+2026-07-05T21:52:55.069972414Z [Sun Jul  5 21:52:55 2026] 127.0.0.1:48686 Closing
+2026-07-05T21:52:55.229791241Z ==> 
+2026-07-05T21:52:55.232758633Z ==> ///////////////////////////////////////////////////////////
+2026-07-05T21:52:55.235470249Z ==> 
+2026-07-05T21:52:55.237986144Z ==> Available at your primary URL https://e-kurs-2slq.onrender.com
+2026-07-05T21:52:55.240400882Z ==> 
+2026-07-05T21:52:55.242898275Z ==> ///////////////////////////////////////////////////////////
+2026-07-05T21:52:58.140826333Z [Sun Jul  5 21:52:58 2026] 127.0.0.1:48702 Accepted
+2026-07-05T21:52:58.141259854Z [Sun Jul  5 21:52:58 2026] 127.0.0.1:48702 [200]: HEAD /
+2026-07-05T21:52:58.141406344Z [Sun Jul  5 21:52:58 2026] 127.0.0.1:48702 Closing
+2026-07-05T21:52:59.513175267Z [Sun Jul  5 21:52:59 2026] 10.228.25.160:54008 Accepted
+2026-07-05T21:52:59.513194858Z [Sun Jul  5 21:52:59 2026] 10.228.25.160:54008 Closed without sending a request; it was probably just an unused speculative preconnection
+2026-07-05T21:52:59.513197679Z [Sun Jul  5 21:52:59 2026] 10.228.25.160:54008 Closing
+2026-07-05T21:53:04.512257698Z [Sun Jul  5 21:53:04 2026] 10.228.25.160:47818 Accepted
+2026-07-05T21:53:04.51228869Z [Sun Jul  5 21:53:04 2026] 10.228.25.160:47818 Closed without sending a request; it was probably just an unused speculative preconnection
+2026-07-05T21:53:04.51229153Z [Sun Jul  5 21:53:04 2026] 10.228.25.160:47818 Closing
+2026-07-05T21:53:04.512624314Z [Sun Jul  5 21:53:04 2026] 10.228.25.160:47826 Accepted
+2026-07-05T21:53:04.512694589Z [Sun Jul  5 21:53:04 2026] 10.228.25.160:47826 Closed without sending a request; it was probably just an unused speculative preconnection
+2026-07-05T21:53:04.512700399Z [Sun Jul  5 21:53:04 2026] 10.228.25.160:47826 Closing
+2026-07-05T21:53:09.515425639Z [Sun Jul  5 21:53:09 2026] 10.228.25.160:47836 Accepted
+2026-07-05T21:53:09.51754236Z [Sun Jul  5 21:53:09 2026] 10.228.25.160:47836 Closed without sending a request; it was probably just an unused speculative preconnection
+2026-07-05T21:53:09.517569012Z [Sun Jul  5 21:53:09 2026] 10.228.25.160:47836 Closing

@@ -145,6 +145,16 @@ if (!in_array('admins', \$tables)) {
     ) ENGINE=InnoDB\"); } catch(Exception \$e) {}
     echo '✅ Tablolar güncellendi.' . PHP_EOL;
 }
+// Her başlatmada admin ve cami şifresini doğru hash ile güncelle
+\$adminHash = password_hash('admin123', PASSWORD_DEFAULT);
+\$db->prepare('UPDATE admins SET password=? WHERE username=?')->execute([\$adminHash, 'admin']);
+\$existing = \$db->prepare('SELECT password FROM mosques WHERE username=?');
+\$existing->execute(['merkez_camii']);
+\$mp = \$existing->fetchColumn();
+if (!\$mp || !password_verify('admin123', \$mp)) {
+    \$mHash = password_hash('admin123', PASSWORD_DEFAULT);
+    \$db->prepare('UPDATE mosques SET password=? WHERE username=?')->execute([\$mHash, 'merkez_camii']);
+}
 " 2>/dev/null || true
 
   echo ""

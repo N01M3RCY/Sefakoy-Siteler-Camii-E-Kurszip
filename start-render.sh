@@ -1,58 +1,48 @@
 #!/usr/bin/env bash
-# Render.com Docker ortamında çalışır (start.sh'in Render için uyarlanmış hali)
+# Render.com Docker ortamında çalışır — harici TiDB Cloud Serverless (MySQL uyumlu) veritabanına bağlanır
 set -e
 
-DB_NAME="cami_sistemi"
-DB_USER="cami_user"
-DB_PASS="cami_pass_2025"
 PORT="${PORT:-724}"
-MYSQL_DATADIR="/var/lib/mysql"
 
-echo "🕌 Cami Yönetim Sistemi (Render) başlatılıyor..."
+: "${TIDB_HOST:?TIDB_HOST ortam değişkeni ayarlanmalı (TiDB Cloud bağlantı bilgileri)}"
+: "${TIDB_PORT:=4000}"
+: "${TIDB_USER:?TIDB_USER ortam değişkeni ayarlanmalı}"
+: "${TIDB_PASSWORD:?TIDB_PASSWORD ortam değişkeni ayarlanmalı}"
+: "${TIDB_DATABASE:=cami_sistemi}"
 
-# ─── MariaDB veri dizinini ilk kez hazırla ───────────────
-if [ ! -d "$MYSQL_DATADIR/mysql" ]; then
-  echo "📦 Veritabanı dizini oluşturuluyor (ilk kurulum)..."
-  mariadb-install-db --user=root --datadir="$MYSQL_DATADIR" > /dev/null 2>&1 || \
-  mysql_install_db --user=root --datadir="$MYSQL_DATADIR" > /dev/null 2>&1 || true
-  echo "✅ Veritabanı dizini hazır."
-fi
+echo "🕌 Cami Yönetim Sistemi (Render + TiDB Cloud) başlatılıyor..."
 
-# ─── MariaDB'yi başlat ────────────────────────────────────
-echo "🔄 MariaDB başlatılıyor..."
-mysqld_safe --user=root --datadir="$MYSQL_DATADIR" --bind-address=127.0.0.1 > /var/log/mysql_start.log 2>&1 &
+# Debian sistem CA bundle'ı TiDB Cloud sertifikasını doğrulamak için yeterli (herkese açık CA ile imzalı)
+SSL_CA_PATH="/etc/ssl/certs/ca-certificates.crt"
 
-for i in $(seq 1 45); do
-  if mysqladmin ping --silent 2>/dev/null; then
-    echo "✅ MariaDB hazır ($i s)."
-    break
-  fi
-  sleep 1
-done
-
-# ─── Kullanıcı ve veritabanı oluştur ──────────────────────
-echo "🔐 Kullanıcı ve veritabanı oluşturuluyor..."
-mysql -u root 2>/dev/null <<SQL
-CREATE DATABASE IF NOT EXISTS \`$DB_NAME\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-CREATE USER IF NOT EXISTS '$DB_USER'@'localhost' IDENTIFIED BY '$DB_PASS';
-GRANT ALL PRIVILEGES ON \`$DB_NAME\`.* TO '$DB_USER'@'localhost';
-FLUSH PRIVILEGES;
-SQL
-echo "✅ Veritabanı hazır: $DB_NAME"
-
-# ─── PHP config yaz ───────────────────────────────────────
 cat > /app/config/db.local.php <<PHP
 <?php
-define('DB_HOST',   '127.0.0.1');
-define('DB_USER',   '$DB_USER');
-define('DB_PASS',   '$DB_PASS');
-define('DB_NAME',   '$DB_NAME');
+define('DB_HOST',   '$TIDB_HOST');
+define('DB_PORT',   $TIDB_PORT);
+define('DB_USER',   '$TIDB_USER');
+define('DB_PASS',   '$TIDB_PASSWORD');
+define('DB_NAME',   '$TIDB_DATABASE');
 define('DB_SOCKET', '');
+define('DB_SSL_CA', '$SSL_CA_PATH');
 PHP
-echo "✅ Config yazıldı."
+echo "✅ Config yazıldı ($TIDB_HOST:$TIDB_PORT)."
+
+echo "🔌 TiDB Cloud bağlantısı test ediliyor..."
+cd /app
+for i in $(seq 1 10); do
+  if php -r "require 'config/db.php'; getDB();" 2>/tmp/db_err.log; then
+    echo "✅ Bağlantı başarılı."
+    break
+  fi
+  if [ "$i" -eq 10 ]; then
+    echo "❌ TiDB Cloud'a bağlanılamadı. TIDB_HOST / TIDB_USER / TIDB_PASSWORD değerlerini kontrol edin."
+    cat /tmp/db_err.log
+    exit 1
+  fi
+  sleep 2
+done
 
 # ─── Tabloları kur / güncelle (idempotent) ────────────────
-cd /app
 php -r "
 require 'config/db.php';
 \$db = getDB();
@@ -61,19 +51,15 @@ if (!in_array('admins', \$tables)) {
     \$db->exec(file_get_contents('schema.sql'));
     echo '✅ Tablolar oluşturuldu.' . PHP_EOL;
 } else {
-    echo 'ℹ️  Tablolar zaten mevcut.' . PHP_EOL;
+    echo 'ℹ️  Tablolar zaten mevcut, veriler korunuyor.' . PHP_EOL;
 }
-\$adminHash = password_hash('admin123', PASSWORD_DEFAULT);
-\$db->prepare('UPDATE admins SET password=? WHERE username=?')->execute([\$adminHash, 'admin']);
-" || true
+"
 
 echo ""
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo "  🔐 Admin:      admin / admin123"
-echo "  🕌 Demo Cami:  merkez_camii / admin123"
-echo "  🌐 Port:       $PORT"
+echo "  🗄️  Veritabanı: TiDB Cloud ($TIDB_DATABASE)"
+echo "  🌐 Port:        $PORT"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 
-# ─── PHP sunucuyu foreground'da başlat ────────────────────
 echo "🚀 PHP sunucu port $PORT'de başlatılıyor..."
 exec php -S 0.0.0.0:"$PORT" -t /app

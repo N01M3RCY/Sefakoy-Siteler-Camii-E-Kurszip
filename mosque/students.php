@@ -28,7 +28,7 @@ if ($gender) { $where .= " AND s.gender=?"; $params[] = $gender; }
 
 $stmt = $db->prepare("
     SELECT s.*, p.name AS p_name, p.surname AS p_surname, p.phone AS p_phone, p.email AS p_email
-    FROM students s JOIN parents p ON s.parent_id = p.id
+    FROM students s LEFT JOIN parents p ON s.parent_id = p.id
     WHERE $where ORDER BY s.created_at DESC
 ");
 $stmt->execute($params);

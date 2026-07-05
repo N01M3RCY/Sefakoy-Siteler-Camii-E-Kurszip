@@ -27,6 +27,9 @@
       <a href="attendance.php" class="sidebar-link <?= basename($_SERVER['PHP_SELF'])==='attendance.php'?'active':'' ?>">
         <span class="sidebar-link-icon">📅</span> Devam Durumu
       </a>
+      <a href="homeworks.php" class="sidebar-link <?= basename($_SERVER['PHP_SELF'])==='homeworks.php'?'active':'' ?>">
+        <span class="sidebar-link-icon">📝</span> Ödevler
+      </a>
       <div class="sidebar-section">Hesap</div>
       <a href="change_password.php" class="sidebar-link <?= basename($_SERVER['PHP_SELF'])==='change_password.php'?'active':'' ?>">
         <span class="sidebar-link-icon">🔑</span> Şifre Değiştir

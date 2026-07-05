@@ -42,11 +42,12 @@ CREATE TABLE IF NOT EXISTS parents (
 CREATE TABLE IF NOT EXISTS students (
   id INT AUTO_INCREMENT PRIMARY KEY,
   mosque_id INT NOT NULL,
-  parent_id INT NOT NULL,
+  parent_id INT NULL,
   name VARCHAR(100) NOT NULL,
   surname VARCHAR(100) NOT NULL,
   tc_no VARCHAR(11),
   birth_date DATE,
+  age INT NULL,
   gender ENUM('male','female') NOT NULL,
   qr_code VARCHAR(20) UNIQUE NOT NULL,
   status ENUM('active','inactive') DEFAULT 'active',
@@ -54,6 +55,28 @@ CREATE TABLE IF NOT EXISTS students (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (mosque_id) REFERENCES mosques(id) ON DELETE CASCADE,
   FOREIGN KEY (parent_id) REFERENCES parents(id) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS duas (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  mosque_id INT NOT NULL,
+  title VARCHAR(200) NOT NULL,
+  content TEXT NOT NULL,
+  category ENUM('sabah','oglen','ikindi','aksam','yatsi','genel','ozel') DEFAULT 'genel',
+  scheduled_date DATE NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (mosque_id) REFERENCES mosques(id) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS homeworks (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  mosque_id INT NOT NULL,
+  title VARCHAR(200) NOT NULL,
+  description TEXT,
+  due_date DATE NULL,
+  status ENUM('active','done') DEFAULT 'active',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (mosque_id) REFERENCES mosques(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS attendance (

@@ -1,87 +1,65 @@
 # Cami Öğrenci Yönetim Sistemi
 
-Müftülük / Cami Kuran Kursu Öğrenci Kayıt ve Yönetim Sistemi.
+PHP + MariaDB tabanlı cami eğitim yönetim uygulaması.
 
-## Proje Yapısı
+## Nasıl Çalıştırılır
 
-```
-/
-├── index.php              # Ana giriş sayfası (3 seçenek)
-├── register.php           # Veli öğrenci kayıt formu (herkese açık)
-├── qr.php                 # QR kod / öğrenci kimlik kartı
-├── install.php            # Veritabanı kurulum scripti (bir kez çalıştır, sonra sil)
-├── config/
-│   └── db.php             # Veritabanı bağlantısı ve yardımcı fonksiyonlar
-├── admin/
-│   ├── login.php          # Admin giriş
-│   ├── index.php          # Admin kontrol paneli
-│   ├── mosques.php        # Cami yönetimi (ekle/sil/durum/şifre sıfırla)
-│   ├── students.php       # Tüm öğrenciler
-│   ├── parents.php        # Tüm veliler
-│   ├── change_password.php
-│   ├── logout.php
-│   └── layout/
-│       ├── header.php
-│       └── footer.php
-├── mosque/
-│   ├── register.php       # Cami kayıt formu
-│   ├── login.php          # Cami giriş
-│   ├── index.php          # Cami kontrol paneli
-│   ├── students.php       # Cami öğrenci listesi + QR kodlar
-│   ├── attendance.php     # QR yoklama sistemi
-│   ├── change_password.php
-│   ├── logout.php
-│   └── layout/
-│       ├── header.php
-│       └── footer.php
-└── assets/
-    ├── css/style.css
-    └── js/main.js
-```
+Workflow: **Start application**  
+Komut: `nix-shell -p mariadb php83 --run 'bash start.sh'`  
+Port: **5000**
 
-## Teknoloji Yığını
+`start.sh` şunları yapar:
+1. PHP sunucuyu hemen başlatır (port 5000)
+2. Arka planda MariaDB'yi başlatır ve veritabanını kurar
+3. İlk çalıştırmada tabloları oluşturur; sonrakilerde günceller
 
-- **Backend:** PHP (InfinityFree uyumlu, PDO + MySQL)
-- **Frontend:** Saf HTML/CSS/JavaScript (framework yok)
-- **Veritabanı:** MySQL 5.7+
-- **QR Kod:** api.qrserver.com (ücretsiz, CDN tabanlı)
+## Giriş Bilgileri
 
-## Kurulum (InfinityFree)
+| Rol | Kullanıcı | Şifre |
+|-----|-----------|-------|
+| Admin | `admin` | `admin123` |
+| Demo Cami | `merkez_camii` | `admin123` |
 
-1. Tüm dosyaları InfinityFree File Manager ile yükleyin
-2. **config/db.php** dosyasını InfinityFree veritabanı bilgileriyle güncelleyin:
-   - `DB_HOST`: genellikle `sql200.infinityfree.com` gibi bir şey
-   - `DB_USER`: InfinityFree veritabanı kullanıcı adı
-   - `DB_PASS`: InfinityFree veritabanı şifresi
-   - `DB_NAME`: InfinityFree veritabanı adı
-3. Aynı değerleri **install.php** dosyasına da yazın
-4. `https://siteniz.infinityfreeapp.com/install.php` adresine gidin
-5. Kurulum tamamlandıktan sonra **install.php dosyasını silin!**
-6. Admin girişi: kullanıcı adı `admin`, şifre `admin123` (hemen değiştirin!)
+## Panel Yapısı
 
-## Kullanıcı Rolleri
-
-| Rol | Giriş | Yetkiler |
-|-----|-------|---------|
-| **Admin** | `/admin/login.php` | Tüm camiler, öğrenciler, veliler; cami onay/red |
-| **Cami** | `/mosque/login.php` | Kendi öğrencileri, QR yoklama, cami bilgileri |
-| **Veli** | Hesap yok | Sadece `/register.php` üzerinden kayıt |
+- `/admin/` — Müftülük / Sistem yöneticisi paneli
+- `/mosque/` — Cami personeli paneli
+- `/parent/` — Veli paneli
 
 ## Özellikler
 
-- ✅ Admin paneli — cami yönetimi (ekle, sil, onayla, şifre sıfırla)
-- ✅ Cami kaydı + cami girişi (ayrı sayfalar)
-- ✅ Veli + öğrenci kayıt formu (cami seçimi ile)
-- ✅ QR kod sistemi — her öğrenciye benzersiz QR
-- ✅ Yazdırılabilir öğrenci kimlik kartı (qr.php)
-- ✅ QR tarama ile yoklama (mosque/attendance.php)
-- ✅ Yeşil/altın müftülük teması
-- ✅ Mobil uyumlu responsive tasarım
-- ✅ InfinityFree uyumlu (saf PHP, harici kütüphane yok)
+### Cami Paneli
+- **Öğrenci Ekle** (`/mosque/add_student.php`) — Sadece isim + yaş ile doğrudan öğrenci ekleme (veli zorunlu değil), yaş grubu dağılımı grafiği
+- **Yoklama** (`/mosque/attendance.php`) — QR tarama + manuel toplu seçim ile yoklama, kayıt silme
+- **Ödevler** (`/mosque/homeworks.php`) — Ödev ekle/tamamla/sil, son tarih takibi
+- **Dua Sistemi** (`/mosque/duas.php`) — Kategori bazlı dua yönetimi (sabah/öğlen/ikindi/akşam/yatsı/genel/özel)
+- **Öğrencilerim** (`/mosque/students.php`) — Veli bağlı veya bağımsız öğrenci listesi
+
+### Veli Paneli
+- **Devam Durumu** — Aylık takvim görünümü
+- **Ödevler** (`/parent/homeworks.php`) — Camiden gelen aktif ödevleri görüntüleme
+
+## Veritabanı
+
+| Tablo | Açıklama |
+|-------|----------|
+| `admins` | Sistem yöneticileri |
+| `mosques` | Cami hesapları |
+| `parents` | Veli hesapları |
+| `students` | Öğrenciler (parent_id NULL olabilir, age alanı var) |
+| `attendance` | Yoklama kayıtları |
+| `duas` | Dua sistemi kayıtları |
+| `homeworks` | Ödev kayıtları |
+
+## Teknik Notlar
+
+- PHP 8.3 (`php83` nix paketi)
+- MariaDB 10.11 (`mariadb` nix paketi)
+- `--auth-root-authentication-method=normal` ile root şifresiz, normal auth
+- DB bağlantısı: Unix socket (`~/mysql.sock`), `cami_user` / `cami_pass_2025`
+- Eğer DB sıfırlanması gerekirse: `rm -rf ~/mysql_data ~/mysql.sock ~/mysql.pid` sonra workflow'u yeniden başlatın
 
 ## User Preferences
 
-- Türkçe dil kullanımı
-- InfinityFree PHP hosting uyumluluğu zorunlu
-- Müftülük / resmi kuruma yakışır profesyonel tasarım
-- Yeşil (#1a7a3a) ve altın (#c9a227) renk teması
+- Sistem Türkçe arayüzle çalışmalı
+- Öğrenciler veli olmadan da eklenebilmeli (yaş bazlı kontrol uygulaması)

@@ -18,7 +18,7 @@ switch ($type) {
                    p.name AS 'Veli Adı', p.surname AS 'Veli Soyadı',
                    p.phone AS 'Veli Telefon', p.email AS 'Veli E-posta',
                    DATE_FORMAT(s.created_at,'%d.%m.%Y') AS 'Kayıt Tarihi'
-            FROM students s JOIN parents p ON s.parent_id=p.id
+            FROM students s LEFT JOIN parents p ON s.parent_id=p.id
             WHERE s.mosque_id=? ORDER BY s.surname, s.name
         ");
         $stmt->execute([$mid]);

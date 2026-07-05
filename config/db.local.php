@@ -1,5 +1,4 @@
 <?php
-// Replit ortamı için otomatik oluşturuldu
 define('DB_HOST',   'localhost');
 define('DB_USER',   'cami_user');
 define('DB_PASS',   'cami_pass_2025');

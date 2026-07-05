@@ -11,12 +11,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_course'])) {
     $name      = trim($_POST['name'] ?? '');
     $desc      = trim($_POST['description'] ?? '');
     $teacher_id = (int)($_POST['teacher_id'] ?? 0) ?: null;
+    $duration  = (int)($_POST['duration_weeks'] ?? 0) ?: null;
+    $startDate = trim($_POST['start_date'] ?? '') ?: null;
     if (!$name) { $error = 'Kurs adı zorunludur.'; }
     else {
-        $db->prepare("INSERT INTO courses (mosque_id,name,description,teacher_id) VALUES (?,?,?,?)")
-           ->execute([$mid, $name, $desc, $teacher_id]);
+        $db->prepare("INSERT INTO courses (mosque_id,name,description,teacher_id,duration_weeks,start_date) VALUES (?,?,?,?,?,?)")
+           ->execute([$mid, $name, $desc, $teacher_id, $duration, $startDate]);
         $success = "\"$name\" kursu oluşturuldu.";
     }
+}
+
+// Kurs süresi/başlangıcı güncelle
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_duration'])) {
+    $cid = (int)$_POST['course_id'];
+    $duration  = (int)($_POST['duration_weeks'] ?? 0) ?: null;
+    $startDate = trim($_POST['start_date'] ?? '') ?: null;
+    $db->prepare("UPDATE courses SET duration_weeks=?, start_date=? WHERE id=? AND mosque_id=?")
+       ->execute([$duration, $startDate, $cid, $mid]);
+    $success = 'Kurs süresi güncellendi.';
 }
 
 // Hoca ata
@@ -76,13 +88,37 @@ include 'layout/header.php';
     <div class="card-header"><span class="card-title">📚 Kurslar (<?= count($courses) ?>)</span></div>
     <div class="table-wrap">
       <table class="table">
-        <thead><tr><th>Kurs Adı</th><th>Hoca</th><th>Öğrenci</th><th>İşlem</th></tr></thead>
+        <thead><tr><th>Kurs Adı</th><th>Süre</th><th>Hoca</th><th>Öğrenci</th><th>İşlem</th></tr></thead>
         <tbody>
-          <?php foreach ($courses as $c): ?>
+          <?php foreach ($courses as $c): $wi = getCourseWeekInfo($c); ?>
           <tr>
             <td>
               <strong><?= sanitize($c['name']) ?></strong>
               <?php if ($c['description']): ?><br><small style="color:#94a3b8"><?= sanitize($c['description']) ?></small><?php endif; ?>
+            </td>
+            <td style="min-width:160px">
+              <form method="post" style="display:flex;gap:4px;align-items:center;margin-bottom:4px">
+                <input type="hidden" name="course_id" value="<?= $c['id'] ?>">
+                <input type="number" name="duration_weeks" value="<?= $c['duration_weeks'] ?>" placeholder="hafta" class="form-control" style="width:60px;font-size:12px;padding:4px 6px;height:auto">
+                <input type="date" name="start_date" value="<?= $c['start_date'] ?>" class="form-control" style="font-size:12px;padding:4px 6px;height:auto">
+                <button name="update_duration" class="btn btn-sm btn-secondary" title="Kaydet">💾</button>
+              </form>
+              <?php if ($wi): ?>
+                <div style="font-size:11px;color:#64748b">
+                  <?php if ($wi['status'] === 'not_started'): ?>
+                    ⏳ Henüz başlamadı
+                  <?php elseif ($wi['status'] === 'finished'): ?>
+                    ✅ Tamamlandı (<?= $wi['total_weeks'] ?> hafta)
+                  <?php else: ?>
+                    📅 <?= $wi['current_week'] ?>. / <?= $wi['total_weeks'] ?> hafta
+                    <div style="background:#e2e8f0;border-radius:999px;height:6px;margin-top:3px">
+                      <div style="background:linear-gradient(90deg,#1a7a3a,#2ea855);height:6px;border-radius:999px;width:<?= $wi['percent'] ?>%"></div>
+                    </div>
+                  <?php endif; ?>
+                </div>
+              <?php else: ?>
+                <small style="color:#cbd5e1">Süre tanımlanmadı</small>
+              <?php endif; ?>
             </td>
             <td>
               <?php if ($c['teacher_name']): ?>
@@ -117,7 +153,7 @@ include 'layout/header.php';
             </td>
           </tr>
           <?php endforeach; ?>
-          <?php if (empty($courses)): ?><tr><td colspan="4"><div class="empty-state"><div class="empty-state-icon">📚</div><div class="empty-state-title">Kurs yok</div></div></td></tr><?php endif; ?>
+          <?php if (empty($courses)): ?><tr><td colspan="5"><div class="empty-state"><div class="empty-state-icon">📚</div><div class="empty-state-title">Kurs yok</div></div></td></tr><?php endif; ?>
         </tbody>
       </table>
     </div>
@@ -131,6 +167,10 @@ include 'layout/header.php';
         <form method="post">
           <div class="form-group"><label class="form-label">Kurs Adı *</label><input type="text" name="name" class="form-control" placeholder="A Grubu, Sabah Kursu..." required></div>
           <div class="form-group"><label class="form-label">Açıklama</label><input type="text" name="description" class="form-control" placeholder="Kısa açıklama..."></div>
+          <div style="display:flex;gap:8px">
+            <div class="form-group" style="flex:1"><label class="form-label">Süre (hafta)</label><input type="number" name="duration_weeks" class="form-control" placeholder="ör. 12" min="1"></div>
+            <div class="form-group" style="flex:1"><label class="form-label">Başlangıç</label><input type="date" name="start_date" class="form-control"></div>
+          </div>
           <div class="form-group">
             <label class="form-label">Hoca (opsiyonel)</label>
             <select name="teacher_id" class="form-control">

@@ -23,6 +23,12 @@ $mosque = $db->prepare("SELECT * FROM mosques WHERE id=?");
 $mosque->execute([$mid]);
 $mosque = $mosque->fetch();
 
+$upcomingHoliday = getUpcomingHoliday($db, 14);
+$todayHoliday = getTodayHoliday($db);
+
+$adminAnnCount = $db->prepare("SELECT COUNT(*) FROM announcements WHERE source_type='admin' AND status='active' AND (mosque_id IS NULL OR mosque_id=?)");
+$adminAnnCount->execute([$mid]); $adminAnnCount = $adminAnnCount->fetchColumn();
+
 $recentStudents = $db->prepare("
     SELECT s.*, p.name AS p_name, p.surname AS p_surname, p.phone AS p_phone
     FROM students s LEFT JOIN parents p ON s.parent_id=p.id
@@ -70,6 +76,31 @@ include 'layout/header.php';
     </div>
   </div>
 </div>
+
+<?php if ($todayHoliday): ?>
+<div class="card" style="margin-bottom:20px;background:#fff7ed;border-left:4px solid #f97316">
+  <div class="card-body" style="display:flex;gap:14px;align-items:center">
+    <div style="font-size:32px">🎉</div>
+    <div><strong>Bugün "<?= sanitize($todayHoliday['name']) ?>"</strong> — tatil günü, ders/yoklama planlarken dikkat edin.</div>
+  </div>
+</div>
+<?php elseif ($upcomingHoliday): ?>
+<div class="card" style="margin-bottom:20px;background:#fefce8;border-left:4px solid #c9a227">
+  <div class="card-body" style="display:flex;gap:14px;align-items:center">
+    <div style="font-size:32px">🗓️</div>
+    <div><strong><?= sanitize($upcomingHoliday['name']) ?></strong> — <?= date('d.m.Y', strtotime($upcomingHoliday['holiday_date'])) ?> tarihinde (<?= (new DateTime())->diff(new DateTime($upcomingHoliday['holiday_date']))->days ?> gün sonra)</div>
+  </div>
+</div>
+<?php endif; ?>
+
+<?php if ($adminAnnCount > 0): ?>
+<div class="card" style="margin-bottom:20px;background:#f5f3ff;border-left:4px solid #7c3aed">
+  <div class="card-body" style="display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap">
+    <div style="display:flex;gap:14px;align-items:center"><div style="font-size:32px">🏛️</div><div><strong>Müftülükten <?= $adminAnnCount ?> aktif duyuru</strong> var.</div></div>
+    <a href="announcements.php" class="btn btn-sm btn-secondary">Görüntüle →</a>
+  </div>
+</div>
+<?php endif; ?>
 
 <!-- Stat Kartları -->
 <div class="stats-grid">
@@ -164,6 +195,7 @@ include 'layout/header.php';
         <a href="duas.php" class="btn btn-secondary btn-block">🤲 Dua Sistemi</a>
         <a href="homeworks.php" class="btn btn-secondary btn-block">📝 Ödevler</a>
         <a href="attendance.php" class="btn btn-secondary btn-block">✅ Yoklama</a>
+        <a href="announcements.php" class="btn btn-secondary btn-block">📢 Duyurular</a>
         <a href="export.php?type=students&format=xls" class="btn btn-secondary btn-block">📥 Excel'e Aktar</a>
       </div>
     </div>

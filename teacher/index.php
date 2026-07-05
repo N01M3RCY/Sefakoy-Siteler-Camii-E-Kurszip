@@ -27,6 +27,10 @@ if ($cid) {
     $s->execute([$cid]); $students = $s->fetchAll();
 }
 
+$weekInfo = $course ? getCourseWeekInfo($course) : null;
+$upcomingHoliday = getUpcomingHoliday($db, 14);
+$todayHoliday = getTodayHoliday($db);
+
 $page_title = 'Kontrol Paneli';
 include 'layout/header.php';
 ?>
@@ -41,6 +45,16 @@ include 'layout/header.php';
         🕌 <?= sanitize($_SESSION['teacher_mosque_name']) ?>
         <?php if ($course): ?> · 📚 <?= sanitize($course['name']) ?><?php endif; ?>
       </div>
+      <?php if ($weekInfo && $weekInfo['status'] === 'ongoing'): ?>
+      <div style="margin-top:8px;font-size:12px">
+        📅 Kurs: <?= $weekInfo['current_week'] ?>. / <?= $weekInfo['total_weeks'] ?> hafta
+        <div style="background:rgba(255,255,255,.2);border-radius:999px;height:6px;margin-top:3px;max-width:220px">
+          <div style="background:#fff;height:6px;border-radius:999px;width:<?= $weekInfo['percent'] ?>%"></div>
+        </div>
+      </div>
+      <?php elseif ($weekInfo && $weekInfo['status'] === 'finished'): ?>
+      <div style="margin-top:8px;font-size:12px">✅ Kurs süresi tamamlandı (<?= $weekInfo['total_weeks'] ?> hafta)</div>
+      <?php endif; ?>
     </div>
     <?php if (!$course): ?>
     <div style="background:rgba(255,255,255,.15);border-radius:10px;padding:12px 16px;font-size:13px">
@@ -49,6 +63,22 @@ include 'layout/header.php';
     <?php endif; ?>
   </div>
 </div>
+
+<?php if ($todayHoliday): ?>
+<div class="card" style="margin-bottom:24px;background:#fff7ed;border-left:4px solid #f97316">
+  <div class="card-body" style="display:flex;gap:14px;align-items:center">
+    <div style="font-size:32px">🎉</div>
+    <div><strong>Bugün "<?= sanitize($todayHoliday['name']) ?>"</strong> — tatil günü.</div>
+  </div>
+</div>
+<?php elseif ($upcomingHoliday): ?>
+<div class="card" style="margin-bottom:24px;background:#fefce8;border-left:4px solid #c9a227">
+  <div class="card-body" style="display:flex;gap:14px;align-items:center">
+    <div style="font-size:32px">🗓️</div>
+    <div><strong><?= sanitize($upcomingHoliday['name']) ?></strong> — <?= date('d.m.Y', strtotime($upcomingHoliday['holiday_date'])) ?> tarihinde</div>
+  </div>
+</div>
+<?php endif; ?>
 
 <div class="stats-grid">
   <div class="stat-card">

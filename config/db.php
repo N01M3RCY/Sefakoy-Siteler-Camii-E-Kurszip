@@ -79,3 +79,33 @@ function session_start_safe() {
         session_start();
     }
 }
+
+function getUpcomingHoliday($db, $withinDays = 30) {
+    $stmt = $db->prepare("SELECT * FROM holidays WHERE holiday_date BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL ? DAY) ORDER BY holiday_date LIMIT 1");
+    $stmt->execute([$withinDays]);
+    return $stmt->fetch();
+}
+
+function getTodayHoliday($db) {
+    $stmt = $db->prepare("SELECT * FROM holidays WHERE holiday_date = CURDATE() LIMIT 1");
+    $stmt->execute();
+    return $stmt->fetch();
+}
+
+function getCourseWeekInfo($course) {
+    if (empty($course['start_date']) || empty($course['duration_weeks'])) return null;
+    $start = new DateTime($course['start_date']);
+    $today = new DateTime('today');
+    if ($today < $start) {
+        return ['current_week' => 0, 'total_weeks' => (int)$course['duration_weeks'], 'status' => 'not_started'];
+    }
+    $diffDays = $start->diff($today)->days;
+    $currentWeek = intdiv($diffDays, 7) + 1;
+    $totalWeeks = (int)$course['duration_weeks'];
+    return [
+        'current_week' => min($currentWeek, $totalWeeks),
+        'total_weeks'  => $totalWeeks,
+        'status'       => $currentWeek > $totalWeeks ? 'finished' : 'ongoing',
+        'percent'      => max(0, min(100, round(($currentWeek / $totalWeeks) * 100))),
+    ];
+}

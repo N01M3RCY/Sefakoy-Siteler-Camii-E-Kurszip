@@ -125,6 +125,8 @@ include 'layout/header.php';
     <a href="mosques.php?filter=pending" class="btn btn-gold">⏳ Onay Bekleyenler (<?= $stats['pending'] ?>)</a>
     <a href="students.php" class="btn btn-secondary">📚 Öğrencileri Görüntüle</a>
     <a href="parents.php" class="btn btn-secondary">👨‍👩‍👧 Velileri Görüntüle</a>
+    <a href="announcements.php" class="btn btn-secondary">📢 Duyuru Yayınla</a>
+    <a href="holidays.php" class="btn btn-secondary">🗓️ Resmi Tatiller</a>
     <a href="change_password.php" class="btn btn-secondary">🔑 Şifre Değiştir</a>
   </div>
 </div>

@@ -74,6 +74,8 @@ CREATE TABLE IF NOT EXISTS courses (
   teacher_id INT NULL,
   name VARCHAR(100) NOT NULL,
   description TEXT,
+  duration_weeks INT NULL,
+  start_date DATE NULL,
   status ENUM('active','inactive') DEFAULT 'active',
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (mosque_id) REFERENCES mosques(id) ON DELETE CASCADE,
@@ -146,6 +148,26 @@ CREATE TABLE IF NOT EXISTS homework_students (
   FOREIGN KEY (student_id) REFERENCES students(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
+CREATE TABLE IF NOT EXISTS announcements (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  source_type ENUM('admin','mosque') NOT NULL,
+  mosque_id INT NULL,
+  title VARCHAR(200) NOT NULL,
+  content TEXT NOT NULL,
+  status ENUM('active','archived') DEFAULT 'active',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (mosque_id) REFERENCES mosques(id) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS holidays (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(150) NOT NULL,
+  holiday_date DATE NOT NULL,
+  type ENUM('resmi','dini','ozel') DEFAULT 'resmi',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE KEY uniq_holiday_date_name (holiday_date, name)
+) ENGINE=InnoDB;
+
 CREATE TABLE IF NOT EXISTS attendance (
   id INT AUTO_INCREMENT PRIMARY KEY,
   student_id INT NOT NULL,
@@ -166,3 +188,23 @@ VALUES ('admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
 INSERT IGNORE INTO mosques (id, name, district, city, imam_name, phone, username, password, status)
 VALUES (1, 'Merkez Camii', 'Kadıköy', 'İstanbul', 'Ahmet Yılmaz', '0216 555 01 01',
         'merkez_camii', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'active');
+
+-- Varsayılan resmi tatiller (2026)
+INSERT IGNORE INTO holidays (name, holiday_date, type) VALUES
+('Yılbaşı', '2026-01-01', 'resmi'),
+('Ramazan Bayramı (Arife)', '2026-03-19', 'dini'),
+('Ramazan Bayramı 1. Gün', '2026-03-20', 'dini'),
+('Ramazan Bayramı 2. Gün', '2026-03-21', 'dini'),
+('Ramazan Bayramı 3. Gün', '2026-03-22', 'dini'),
+('Ulusal Egemenlik ve Çocuk Bayramı', '2026-04-23', 'resmi'),
+('Emek ve Dayanışma Günü', '2026-05-01', 'resmi'),
+('Atatürk\'ü Anma, Gençlik ve Spor Bayramı', '2026-05-19', 'resmi'),
+('Kurban Bayramı (Arife)', '2026-05-26', 'dini'),
+('Kurban Bayramı 1. Gün', '2026-05-27', 'dini'),
+('Kurban Bayramı 2. Gün', '2026-05-28', 'dini'),
+('Kurban Bayramı 3. Gün', '2026-05-29', 'dini'),
+('Kurban Bayramı 4. Gün', '2026-05-30', 'dini'),
+('Demokrasi ve Milli Birlik Günü', '2026-07-15', 'resmi'),
+('Zafer Bayramı', '2026-08-30', 'resmi'),
+('Cumhuriyet Bayramı (Arife)', '2026-10-28', 'resmi'),
+('Cumhuriyet Bayramı', '2026-10-29', 'resmi');

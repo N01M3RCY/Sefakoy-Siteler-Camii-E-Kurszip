@@ -33,6 +33,14 @@
         <span class="sidebar-link-icon">👨‍👩‍👧</span> Veliler
       </a>
 
+      <div class="sidebar-section">İletişim</div>
+      <a href="announcements.php" class="sidebar-link <?= basename($_SERVER['PHP_SELF']) === 'announcements.php' ? 'active' : '' ?>">
+        <span class="sidebar-link-icon">📢</span> Duyurular
+      </a>
+      <a href="holidays.php" class="sidebar-link <?= basename($_SERVER['PHP_SELF']) === 'holidays.php' ? 'active' : '' ?>">
+        <span class="sidebar-link-icon">🗓️</span> Resmi Tatiller
+      </a>
+
       <div class="sidebar-section">Hesap</div>
       <a href="change_password.php" class="sidebar-link <?= basename($_SERVER['PHP_SELF']) === 'change_password.php' ? 'active' : '' ?>">
         <span class="sidebar-link-icon">🔑</span> Şifre Değiştir

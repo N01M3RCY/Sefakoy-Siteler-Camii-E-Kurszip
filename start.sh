@@ -166,6 +166,52 @@ if (!in_array('admins', \$tables)) {
         FOREIGN KEY (homework_id) REFERENCES homeworks(id) ON DELETE CASCADE,
         FOREIGN KEY (student_id) REFERENCES students(id) ON DELETE CASCADE
     ) ENGINE=InnoDB\"); } catch(Exception \$e) {}
+    try { \$db->exec('ALTER TABLE courses ADD COLUMN duration_weeks INT NULL AFTER description'); } catch(Exception \$e) {}
+    try { \$db->exec('ALTER TABLE courses ADD COLUMN start_date DATE NULL AFTER duration_weeks'); } catch(Exception \$e) {}
+    try { \$db->exec(\"CREATE TABLE IF NOT EXISTS announcements (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        source_type ENUM('admin','mosque') NOT NULL,
+        mosque_id INT NULL,
+        title VARCHAR(200) NOT NULL,
+        content TEXT NOT NULL,
+        status ENUM('active','archived') DEFAULT 'active',
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (mosque_id) REFERENCES mosques(id) ON DELETE CASCADE
+    ) ENGINE=InnoDB\"); } catch(Exception \$e) {}
+    try { \$db->exec(\"CREATE TABLE IF NOT EXISTS holidays (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(150) NOT NULL,
+        holiday_date DATE NOT NULL,
+        type ENUM('resmi','dini','ozel') DEFAULT 'resmi',
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE KEY uniq_holiday_date_name (holiday_date, name)
+    ) ENGINE=InnoDB\"); } catch(Exception \$e) {}
+    try {
+        \$holidayCount = (int)\$db->query('SELECT COUNT(*) FROM holidays')->fetchColumn();
+        if (\$holidayCount === 0) {
+            \$hIns = \$db->prepare('INSERT IGNORE INTO holidays (name, holiday_date, type) VALUES (?,?,?)');
+            \$defaultHolidays = [
+                ['Yılbaşı', '2026-01-01', 'resmi'],
+                ['Ramazan Bayramı (Arife)', '2026-03-19', 'dini'],
+                ['Ramazan Bayramı 1. Gün', '2026-03-20', 'dini'],
+                ['Ramazan Bayramı 2. Gün', '2026-03-21', 'dini'],
+                ['Ramazan Bayramı 3. Gün', '2026-03-22', 'dini'],
+                ['Ulusal Egemenlik ve Çocuk Bayramı', '2026-04-23', 'resmi'],
+                ['Emek ve Dayanışma Günü', '2026-05-01', 'resmi'],
+                [\"Atatürk'ü Anma, Gençlik ve Spor Bayramı\", '2026-05-19', 'resmi'],
+                ['Kurban Bayramı (Arife)', '2026-05-26', 'dini'],
+                ['Kurban Bayramı 1. Gün', '2026-05-27', 'dini'],
+                ['Kurban Bayramı 2. Gün', '2026-05-28', 'dini'],
+                ['Kurban Bayramı 3. Gün', '2026-05-29', 'dini'],
+                ['Kurban Bayramı 4. Gün', '2026-05-30', 'dini'],
+                ['Demokrasi ve Milli Birlik Günü', '2026-07-15', 'resmi'],
+                ['Zafer Bayramı', '2026-08-30', 'resmi'],
+                ['Cumhuriyet Bayramı (Arife)', '2026-10-28', 'resmi'],
+                ['Cumhuriyet Bayramı', '2026-10-29', 'resmi'],
+            ];
+            foreach (\$defaultHolidays as \$h) { \$hIns->execute(\$h); }
+        }
+    } catch(Exception \$e) {}
     echo '✅ Tablolar güncellendi.' . PHP_EOL;
 }
 // Her başlatmada admin ve cami şifresini doğru hash ile güncelle

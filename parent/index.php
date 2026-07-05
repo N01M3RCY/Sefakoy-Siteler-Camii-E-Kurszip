@@ -31,6 +31,24 @@ $recentAttendance = $db->prepare("
 $recentAttendance->execute([$pid]);
 $recentAttendance = $recentAttendance->fetchAll();
 
+$upcomingHoliday = getUpcomingHoliday($db, 14);
+$todayHoliday = getTodayHoliday($db);
+
+$mosqueIdsForAnn = array_unique(array_column($students, 'mosque_id'));
+$activeAnnCount = 0;
+if (!empty($mosqueIdsForAnn)) {
+    $in = implode(',', array_fill(0, count($mosqueIdsForAnn), '?'));
+    $annStmt = $db->prepare("
+        SELECT COUNT(*) FROM announcements
+        WHERE status='active' AND (
+            (source_type='admin' AND (mosque_id IS NULL OR mosque_id IN ($in)))
+            OR (source_type='mosque' AND mosque_id IN ($in))
+        )
+    ");
+    $annStmt->execute(array_merge($mosqueIdsForAnn, $mosqueIdsForAnn));
+    $activeAnnCount = $annStmt->fetchColumn();
+}
+
 $page_title = 'Kontrol Paneli';
 include 'layout/header.php';
 ?>
@@ -42,6 +60,31 @@ include 'layout/header.php';
     <div style="opacity:.8;font-size:13px;margin-top:4px"><?= count($students) ?> kayıtlı öğrenci · <?= date('F Y') ?></div>
   </div>
 </div>
+
+<?php if ($todayHoliday): ?>
+<div class="card" style="margin-bottom:20px;background:#fff7ed;border-left:4px solid #f97316">
+  <div class="card-body" style="display:flex;gap:14px;align-items:center">
+    <div style="font-size:32px">🎉</div>
+    <div><strong>Bugün "<?= sanitize($todayHoliday['name']) ?>"</strong> — tatil günü.</div>
+  </div>
+</div>
+<?php elseif ($upcomingHoliday): ?>
+<div class="card" style="margin-bottom:20px;background:#fefce8;border-left:4px solid #c9a227">
+  <div class="card-body" style="display:flex;gap:14px;align-items:center">
+    <div style="font-size:32px">🗓️</div>
+    <div><strong><?= sanitize($upcomingHoliday['name']) ?></strong> — <?= date('d.m.Y', strtotime($upcomingHoliday['holiday_date'])) ?> tarihinde</div>
+  </div>
+</div>
+<?php endif; ?>
+
+<?php if ($activeAnnCount > 0): ?>
+<div class="card" style="margin-bottom:20px;background:#f5f3ff;border-left:4px solid #7c3aed">
+  <div class="card-body" style="display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap">
+    <div style="display:flex;gap:14px;align-items:center"><div style="font-size:32px">📢</div><div><strong><?= $activeAnnCount ?> aktif duyuru</strong> var.</div></div>
+    <a href="announcements.php" class="btn btn-sm btn-secondary">Görüntüle →</a>
+  </div>
+</div>
+<?php endif; ?>
 
 <!-- Öğrenci Kartları -->
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;margin-bottom:28px">

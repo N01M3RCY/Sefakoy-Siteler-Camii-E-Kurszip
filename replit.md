@@ -38,6 +38,23 @@ Port: **5000**
 ### Veli Paneli
 - **Devam Durumu** — Aylık takvim görünümü
 - **Ödevler** (`/parent/homeworks.php`) — Camiden gelen aktif ödevleri görüntüleme
+- **Duyurular** (`/parent/announcements.php`) — Müftülük (genel/hedefli) ve caminin velilere yönelik duyurularının birleşik akışı
+
+### Duyuru Sistemi
+- **Admin** (`/admin/announcements.php`) — Tüm camilere veya belirli bir camiye duyuru yayınlama, arşivleme/silme
+- **Cami** (`/mosque/announcements.php`) — Kendi velilerine duyuru yayınlama + müftülükten gelen duyuruları görüntüleme
+- **Veli** (`/parent/announcements.php`) — Bağlı olduğu camilerden ve müftülükten gelen tüm aktif duyuruları görüntüleme
+- Dashboard'larda (mosque/parent/admin) aktif duyuru sayısı banner olarak gösterilir
+
+### Kurs Süresi (Hafta Bazlı)
+- Kurslara `duration_weeks` (toplam hafta) ve `start_date` (başlangıç tarihi) atanabilir (`/mosque/courses.php`)
+- Sistem otomatik olarak "kaçıncı hafta" olduğunu hesaplar (`getCourseWeekInfo()` - `config/db.php`)
+- Hoca panelinde (`/teacher/index.php`) ve cami panelinde ilerleme çubuğu ile gösterilir
+
+### Resmi Tatiller
+- **Admin** (`/admin/holidays.php`) — Yıl bazlı filtreli tatil listesi, ekleme/silme, tür bazlı rozetler (resmi/dini/özel)
+- Varsayılan olarak 2026 Türkiye resmi ve dini tatilleri önceden yüklenmiştir
+- Cami/hoca/veli dashboard'larında yaklaşan tatil (14 gün içinde) veya bugünün tatil olduğu banner ile bildirilir (`getUpcomingHoliday()`, `getTodayHoliday()` - `config/db.php`)
 
 ## Veritabanı
 
@@ -50,6 +67,9 @@ Port: **5000**
 | `attendance` | Yoklama kayıtları |
 | `duas` | Dua sistemi kayıtları |
 | `homeworks` | Ödev kayıtları |
+| `courses` | Kurslar (`duration_weeks`, `start_date` alanları eklendi) |
+| `announcements` | Duyurular (`source_type`: admin/mosque, `mosque_id` NULL ise tüm camilere) |
+| `holidays` | Resmi/dini/özel tatiller (`type`: resmi/dini/ozel) |
 
 ## Teknik Notlar
 
